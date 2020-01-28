@@ -11,6 +11,7 @@ export const MainStore = createContext<MainState>(initialState);
 export default function StoreProvider({
   children
 }: JSX.ElementChildrenAttribute): JSX.Element {
+  //TODO: change the any type
   const [state, dispatch] = React.useReducer<any>(mainReducer, initialState);
   return (
     <MainStore.Provider value={{ state, dispatch }}>
