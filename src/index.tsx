@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -10,7 +9,7 @@ function Root(): JSX.Element {
   return (
     <Router>
       <Switch>
-        <Route component={App} path='/' />
+        <Route component={App} path="/" />
       </Switch>
     </Router>
   );
