@@ -6,13 +6,13 @@ const initialState: MainState = {
   title: 'Samu Social de Paris Planning Maker'
 };
 
-export const MainStore = createContext<MainState>(initialState);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const MainStore = createContext<MainState | any>(initialState);
 
 export default function StoreProvider({
   children
 }: JSX.ElementChildrenAttribute): JSX.Element {
-  //TODO: change the any type
-  const [state, dispatch] = React.useReducer<any>(mainReducer, initialState);
+  const [state, dispatch] = React.useReducer(mainReducer, initialState);
   return (
     <MainStore.Provider value={{ state, dispatch }}>
       {children}

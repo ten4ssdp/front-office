@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from './views/app/App';
 import * as serviceWorker from './serviceWorker';
 import StoreProvider from './store/MainStore';
+import AuthProvider from './store/UserStore';
 
 function Root(): JSX.Element {
   return (
@@ -16,9 +17,11 @@ function Root(): JSX.Element {
 }
 
 ReactDOM.render(
-  <StoreProvider>
-    <Root />
-  </StoreProvider>,
+  <AuthProvider>
+    <StoreProvider>
+      <Root />
+    </StoreProvider>
+  </AuthProvider>,
   document.getElementById('root')
 );
 
