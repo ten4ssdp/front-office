@@ -5,7 +5,7 @@ import App from './views/app/App';
 import * as serviceWorker from './serviceWorker';
 import StoreProvider from './store/MainStore';
 
-function Root(): JSX.Element {
+function Root() : JSX.Element {
   return (
     <Router>
       <Switch>
