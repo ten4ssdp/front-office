@@ -7,7 +7,9 @@ const userInitialState: UserState = {
   firstname: '',
   email: '',
   password: '',
-  address: ''
+  address: '',
+  isLogin: true,
+  token: null
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,7 +18,11 @@ export const UserStore = createContext<UserState | any>(userInitialState);
 export default function AuthProvider({
   children
 }: JSX.ElementChildrenAttribute): JSX.Element {
-  const [userState, dispatch] = React.useReducer(userReducer, userInitialState);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [userState, dispatch] = React.useReducer<any>(
+    userReducer,
+    userInitialState
+  );
   return (
     <UserStore.Provider value={{ userState, dispatch }}>
       {children}

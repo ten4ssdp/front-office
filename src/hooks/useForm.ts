@@ -9,8 +9,9 @@ function useForm(initialValues: UserState | MainState) {
     initialValues
   );
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value, name } = e.currentTarget;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.persist();
+    const { name, value } = e.target;
     setvalues({ ...values, [name]: value });
   };
 

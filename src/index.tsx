@@ -5,12 +5,17 @@ import App from './views/app/App';
 import * as serviceWorker from './serviceWorker';
 import StoreProvider from './store/MainStore';
 import AuthProvider from './store/UserStore';
+import Auth from './views/auth';
+import PrivateRoute from './components/ProtectedRoute';
+
+import './styles/index.scss';
 
 function Root(): JSX.Element {
   return (
     <Router>
       <Switch>
-        <Route component={App} path="/" />
+        <PrivateRoute exact component={App} path="/" />
+        <Route exact component={Auth} path="/auth" />
       </Switch>
     </Router>
   );

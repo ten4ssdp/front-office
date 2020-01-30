@@ -5,7 +5,8 @@ export interface UserState {
   password?: string;
   address?: string;
   team?: string;
-  token?: string;
+  token?: string | null;
+  isLogin?: boolean;
 }
 
 export interface UserAction {
