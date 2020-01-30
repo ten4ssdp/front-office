@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+// import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import TextField from '@material-ui/core/TextField';
 import useAuth from '../../hooks/useAuth';
 import { UserState } from '../../interface/userInterface';
-import { PrimaryButton } from 'office-ui-fabric-react';
+import Button from '@material-ui/core/Button';
 import { UserStore } from '../../store/UserStore';
 import { toogleAuth } from '../../action/userAction';
 import { useHistory } from 'react-router-dom';
@@ -82,10 +83,9 @@ export default function AuthForm(): JSX.Element {
           className="auth-form__input"
           required
         />
-        <PrimaryButton
-          type="submit"
-          text={userState.isLogin ? "S'identifier" : 'Créer un compte'}
-        />
+        <Button variant="contained" type="submit" color="primary">
+          {userState.isLogin ? "S'identifier" : 'Créer un compte'}
+        </Button>
       </form>
 
       <p className="auth-form__toogle">
