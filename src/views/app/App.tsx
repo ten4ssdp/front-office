@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import { MainStore } from '../../store/MainStore';
 import { isElectron } from '../../utils/isElectron';
-import Header from '../header/header';
 import { momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import DashboardNav from '../dashboard/dashboard-nav';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './app.scss';
+import UserOverview from '../userOverview/userOverview';
 
 
 const Calendar = require('react-big-calendar');
@@ -23,10 +22,9 @@ function App(): JSX.Element {
 
   return (
     
-    <div className="App" style={{margin: 0, padding: 0}}>
-      <Header></Header>
+    <div className="App">
       <div className="App-container">
-        <DashboardNav></DashboardNav>
+        <UserOverview></UserOverview>
         <Calendar
           className="App-calendar"
           events={state.events}
@@ -35,7 +33,6 @@ function App(): JSX.Element {
           defaultDate={moment().toDate()}
           localizer={localizer}
           defaultView="week"
-          style={{ width: 80 + '%', height: 700 }}
         ></Calendar>
       </div>
     </div>
