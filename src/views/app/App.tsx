@@ -1,21 +1,19 @@
 import React, { useContext } from 'react';
 import { MainStore } from '../../store/MainStore';
-
 import { isElectron } from '../../utils/isElectron';
+import Header from '../header/header';
 import { momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import Header from '../header/header';
 import DashboardNav from '../dashboard/dashboard-nav';
-
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './app.scss';
+
 
 const Calendar = require('react-big-calendar');
 const localizer = momentLocalizer(moment);
-import { UserStore } from '../../store/UserStore';
 
 function App(): JSX.Element {
   const { state } = useContext(MainStore);
-  const { userState } = useContext(UserStore);
 
   React.useEffect(() => {
     if (isElectron()) {
@@ -27,9 +25,10 @@ function App(): JSX.Element {
     
     <div className="App" style={{margin: 0, padding: 0}}>
       <Header></Header>
-      <div style={{display: 'flex'}}>
+      <div className="App-container">
         <DashboardNav></DashboardNav>
         <Calendar
+          className="App-calendar"
           events={state.events}
           startAccessor="start"
           endAccessor="end"

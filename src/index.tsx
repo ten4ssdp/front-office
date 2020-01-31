@@ -8,13 +8,13 @@ import AuthProvider from './store/UserStore';
 import Auth from './views/auth';
 import PrivateRoute from './components/ProtectedRoute';
 
-import './styles/index.scss';
+import './assets/styles/index.scss';
 
-function Root() : JSX.Element {
+function Root(): JSX.Element {
   return (
     <Router>
       <Switch>
-        <PrivateRoute exact component={App} path="/" />
+        <Route exact component={App} path="/" />
         <Route exact component={Auth} path="/auth" />
       </Switch>
     </Router>

@@ -1,0 +1,10 @@
+.App {
+  &-container {
+    display: flex;
+  }
+  &-calendar {
+    min-height: 700px;
+    width: 80%;
+    margin-top: 15px;
+  }
+}
