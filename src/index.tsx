@@ -13,6 +13,7 @@ import AuthProvider from './store/UserStore';
 import Auth from './views/auth';
 import Hostels from './views/hostels/hostels';
 import Vehicles from './views/vehicles/vehicles';
+import UserList from './views/userList/userList';
 
 function Root(): JSX.Element {
   return (
@@ -25,6 +26,7 @@ function Root(): JSX.Element {
           <Route exact component={Auth} path="/auth" />
           <Route exact component={Hostels} path="/hotels" />
           <Route exact component={Vehicles} path="/vehicules" />
+          <Route exact component={UserList} path="/effectif" />
         </Switch>
       </div>
     </Router>
