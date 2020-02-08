@@ -33,6 +33,11 @@ function Header(): JSX.Element {
                 Les vehicules
               </NavLink>
             </li>
+            <li className="Header-nav-element">
+              <NavLink to="/effectif">
+                Effectifs
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>
