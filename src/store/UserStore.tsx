@@ -3,8 +3,8 @@ import { UserState } from '../interface/userInterface';
 import userReducer from '../reducer/UserReducer';
 
 const userInitialState: UserState = {
-  lastname: '',
-  firstname: '',
+  lastname: 'Boulard',
+  firstname: 'Brigitte',
   email: '',
   password: '',
   address: '',
