@@ -19,24 +19,16 @@ function Header(): JSX.Element {
         <nav className="Header-nav">
           <ul className="Header-nav-container">
             <li className="Header-nav-element">
-              <NavLink to="/">
-                Planning
-              </NavLink>
+              <NavLink to="/">Planning</NavLink>
             </li>
             <li className="Header-nav-element">
-              <NavLink to="/hotels">
-                Les Hôtels
-              </NavLink>
+              <NavLink to="/hotels">Les Hôtels</NavLink>
             </li>
             <li className="Header-nav-element">
-              <NavLink to="/vehicules">
-                Les vehicules
-              </NavLink>
+              <NavLink to="/vehicules">Les vehicules</NavLink>
             </li>
             <li className="Header-nav-element">
-              <NavLink to="/effectif">
-                Effectifs
-              </NavLink>
+              <NavLink to="/effectif">Effectifs</NavLink>
             </li>
           </ul>
         </nav>
@@ -46,4 +38,3 @@ function Header(): JSX.Element {
 }
 
 export default Header;
-

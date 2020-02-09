@@ -1,28 +1,28 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import PrivateRoute from './components/ProtectedRoute';
 import './assets/styles/index.scss';
 
-import DashboardNav from './views/dashboard/dashboard-nav';
-import App from './views/app/App';
-import Header from './views/header/header';
+import DashboardNav from './views/Dashboard/dashboard-nav';
+import Home from './views/Home';
+import Header from './views/Header';
 import StoreProvider from './store/MainStore';
 import AuthProvider from './store/UserStore';
-import Auth from './views/auth';
+import Auth from './views/Auth';
 import Hostels from './views/hostels/hostels';
-import Vehicles from './views/vehicles/vehicles';
+import Vehicles from './views/Vehicles';
 import UserList from './views/userList/userList';
 
 function Root(): JSX.Element {
   return (
     <Router>
-      <Header></Header>
-      <div style={{display: 'flex'}}>
+      <Header />
+      <div style={{ display: 'flex' }}>
         <DashboardNav></DashboardNav>
         <Switch>
-          <Route exact component={App} path="/" />
+          <Route exact component={Home} path="/" />
           <Route exact component={Auth} path="/auth" />
           <Route exact component={Hostels} path="/hotels" />
           <Route exact component={Vehicles} path="/vehicules" />
@@ -33,7 +33,7 @@ function Root(): JSX.Element {
   );
 }
 
-ReactDOM.render(
+render(
   <AuthProvider>
     <StoreProvider>
       <Root />

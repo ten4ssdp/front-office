@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import { MainStore } from '../../store/MainStore';
 import { isElectron } from '../../utils/isElectron';
-import MyCalendar from '../calendar/calendar'
+import MyCalendar from '../Calendar';
 import UserOverview from '../userOverview/userOverview';
 import './app.scss';
 
-
-function App(): JSX.Element {
+function Home(): JSX.Element {
   const { state } = useContext(MainStore);
 
   React.useEffect(() => {
@@ -16,15 +15,13 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    
-    <div className="App">
-      <div className="App-container">
-        <UserOverview></UserOverview>
-        <MyCalendar/>
+    <div className="Home">
+      <div className="Home-container">
+        <UserOverview />
+        <MyCalendar />
       </div>
     </div>
   );
 }
 
-export default App;
-
+export default Home;
