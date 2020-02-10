@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import './userOverview.scss';
 
 function UserOverview(): JSX.Element {
   return (
-    <div className="UserOverview">
+    <div className="userOverWiew">
       <h1>Component UserOverview works</h1>
     </div>
   );

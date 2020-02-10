@@ -13,6 +13,10 @@ const MyCalendar = () => {
     <div className="calendar">
       <Calendar
         height="50%"
+        week={{
+          hourStart: 9,
+          hourEnd: 20
+        }}
         calendars={[
           {
             id: '0',
@@ -42,40 +46,14 @@ const MyCalendar = () => {
             end: end
           }
         ]}
-        scheduleView
-        taskView
-        template={{
-          milestone(schedule) {
-            return `<span style="color:#fff;background-color: ${schedule.bgColor};">${schedule.title}</span>`;
-          },
-          milestoneTitle() {
-            return 'Milestone';
-          },
-          allday(schedule) {
-            return `${schedule.title}<i class="fa fa-refresh"></i>`;
-          },
-          alldayTitle() {
-            return 'All Day';
-          }
-        }}
         timezones={[
           {
-            timezoneOffset: 540,
-            displayLabel: 'GMT+09:00',
-            tooltip: 'Seoul'
-          },
-          {
-            timezoneOffset: -420,
-            displayLabel: 'GMT-08:00',
-            tooltip: 'Los Angeles'
+            timezoneOffset: -60,
+            tooltip: 'Paris'
           }
         ]}
         useDetailPopup
         useCreationPopup
-        week={{
-          showTimezoneCollapseButton: true,
-          timezonesCollapsed: true
-        }}
       />
     </div>
   );

@@ -1,9 +1,14 @@
-.App {
-  width: 82%;
+.Home {
+  width: 100vw;
+
+  &-layout {
+    width: 100%;
+    height: calc(100vh - 80px);
+  }
 
   &-container {
-    display: flex;
-    flex-direction: column;
+    width: calc(100vw - 250px);
+    height: 100%;
   }
 
   &-calendar {

@@ -1,34 +1,29 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-import PrivateRoute from './components/ProtectedRoute';
+// import PrivateRoute from './components/ProtectedRoute';
 import './assets/styles/index.scss';
 
-import DashboardNav from './views/Dashboard/dashboard-nav';
 import Home from './views/Home';
-import Header from './views/Header';
 import StoreProvider from './store/MainStore';
 import AuthProvider from './store/UserStore';
 import Auth from './views/Auth';
-import Hostels from './views/hostels/hostels';
-import Vehicles from './views/Vehicles';
-import UserList from './views/userList/userList';
 
 function Root(): JSX.Element {
   return (
     <Router>
-      <Header />
-      <div style={{ display: 'flex' }}>
-        <DashboardNav></DashboardNav>
-        <Switch>
-          <Route exact component={Home} path="/" />
-          <Route exact component={Auth} path="/auth" />
-          <Route exact component={Hostels} path="/hotels" />
-          <Route exact component={Vehicles} path="/vehicules" />
-          <Route exact component={UserList} path="/effectif" />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact component={Auth} path="/auth" />
+        <Route exact component={Home} path="/home/:components" />
+        <Redirect from="/" to="/home/home" />
+        <Route exact component={Home} path="/home/home" />
+      </Switch>
     </Router>
   );
 }
