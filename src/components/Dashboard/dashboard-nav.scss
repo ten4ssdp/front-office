@@ -1,0 +1,17 @@
+.DashboardNav {
+  top: 0;
+  left: 0;
+  width: 235px;
+  height: calc(100vh-80px);
+  box-shadow: 4px 0px 4px 0px lightgrey;
+  margin-right: 15px;
+  &-container {
+    margin: auto;
+    text-align: center;
+  }
+  &-img {
+    width: 150px !important;
+    height: 150px !important;
+    margin: 15px auto;
+  }
+}

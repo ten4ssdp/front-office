@@ -1,24 +1,39 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import App from './views/app/App';
+import { render } from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
+// import PrivateRoute from './components/ProtectedRoute';
+import './assets/styles/index.scss';
+
+import Home from './views/Home';
 import StoreProvider from './store/MainStore';
+import AuthProvider from './store/UserStore';
+import Auth from './views/Auth';
 
 function Root(): JSX.Element {
   return (
     <Router>
       <Switch>
-        <Route component={App} path="/" />
+        <Route exact component={Auth} path="/auth" />
+        <Route exact component={Home} path="/home/:components" />
+        <Redirect from="/" to="/home/home" />
+        <Route exact component={Home} path="/home/home" />
       </Switch>
     </Router>
   );
 }
 
-ReactDOM.render(
-  <StoreProvider>
-    <Root />
-  </StoreProvider>,
+render(
+  <AuthProvider>
+    <StoreProvider>
+      <Root />
+    </StoreProvider>
+  </AuthProvider>,
   document.getElementById('root')
 );
 

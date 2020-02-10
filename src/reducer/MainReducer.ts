@@ -1,7 +1,9 @@
+import { MainState } from '../interface/storeInterface';
 function mainReducer(
-  state: { title: string },
+  // state: { title: string, events: []},
+  state: MainState,
   //TODO: change the any type
-  action: { type: string; payload: any }
+  action: { type: string; payload: MainState }
 ) {
   switch (action.type) {
     default:
@@ -10,3 +12,4 @@ function mainReducer(
 }
 
 export default mainReducer;
+

@@ -1,0 +1,19 @@
+.Home {
+  width: 100vw;
+
+  &-layout {
+    width: 100%;
+    height: calc(100vh - 80px);
+  }
+
+  &-container {
+    width: calc(100vw - 250px);
+    height: 100%;
+  }
+
+  &-calendar {
+    width: 100%;
+    margin-top: 15px;
+    height: 85vh;
+  }
+}
