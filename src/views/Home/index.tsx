@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import { isElectron } from '../../utils/isElectron';
 import DashboardNav from '../../components/Dashboard/dashboard-nav';
 import './home.scss';
-import Header from '../Header';
+import Header from '../../components/Header';
 import HomeRoot from './Home';
 import Hostels from '../Hostels';
 import Vehicles from '../Vehicles';
