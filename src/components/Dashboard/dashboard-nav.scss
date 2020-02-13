@@ -2,7 +2,7 @@
   top: 0;
   left: 0;
   width: 235px;
-  height: 92vh;
+  height: calc(100vh-80px);
   box-shadow: 4px 0px 4px 0px lightgrey;
   margin-right: 15px;
   &-container {

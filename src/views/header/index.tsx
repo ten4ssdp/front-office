@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
-// import { MainStore } from '../../store/MainStore';
-// import { UserStore } from '../../store/UserStore';
+import React from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 import './header.scss';
-import { NavLink } from 'react-router-dom';
 
 function Header(): JSX.Element {
-  // const { state } = useContext(MainStore);
-  // const { userState } = useContext(UserStore);
-
+  const history = useHistory();
   return (
     <div className="Header">
       <div className="Header-container">
@@ -19,31 +17,26 @@ function Header(): JSX.Element {
         <nav className="Header-nav">
           <ul className="Header-nav-container">
             <li className="Header-nav-element">
-              <NavLink to="/">
-                Planning
-              </NavLink>
+              <NavLink to="/home/home">Planning</NavLink>
             </li>
             <li className="Header-nav-element">
-              <NavLink to="/hotels">
-                Les Hôtels
-              </NavLink>
+              <NavLink to="/home/hotels">Les Hôtels</NavLink>
             </li>
             <li className="Header-nav-element">
-              <NavLink to="/vehicules">
-                Les vehicules
-              </NavLink>
+              <NavLink to="/home/vehicules">Les vehicules</NavLink>
             </li>
             <li className="Header-nav-element">
-              <NavLink to="/effectif">
-                Effectifs
-              </NavLink>
+              <NavLink to="/home/effectif">Effectifs</NavLink>
             </li>
           </ul>
         </nav>
+
+        <Button variant="contained" onClick={() => history.push('/auth')}>
+          Se déconneter
+        </Button>
       </div>
     </div>
   );
 }
 
 export default Header;
-
