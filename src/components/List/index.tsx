@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Table } from 'antd';
+import { PropsList } from '../../interface/listInterface';
 
-export default function List(props: any) {
+export default function List(props: PropsList) {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
 
   const onSelectChange = (selected: any[]) => {
@@ -16,12 +17,16 @@ export default function List(props: any) {
 
   return (
     <div>
-      <h3>{props.title}</h3>
-      <Table
-        rowSelection={rowSelection}
-        columns={props.columns}
-        dataSource={props.data}
-      />
+      <header>
+        <h3>{props.title}</h3>
+      </header>
+      <div style={{ padding: '0 2%' }}>
+        <Table
+          rowSelection={rowSelection}
+          columns={props.columns}
+          dataSource={props.data as any}
+        />
+      </div>
     </div>
   );
 }

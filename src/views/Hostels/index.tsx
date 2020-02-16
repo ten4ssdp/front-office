@@ -1,9 +1,13 @@
 import React from 'react';
 import List from '../../components/List';
-import UserOverview from '../../components/UserOverview/userOverview';
 import { Icon } from 'antd';
+import {
+  HotelsDatasInterface,
+  ColumnsInterface
+} from '../../interface/listInterface';
+import PlanningOVerview from '../../components/Overview/PlanningOverview';
 
-const columns = [
+const columns: ColumnsInterface[] = [
   {
     title: 'Hôtels',
     dataIndex: 'hotel'
@@ -33,7 +37,7 @@ const columns = [
   }
 ];
 
-const data: any[] | undefined = [];
+const data: HotelsDatasInterface[] = [];
 for (let i = 0; i < 46; i++) {
   data.push({
     key: i,
@@ -46,8 +50,7 @@ for (let i = 0; i < 46; i++) {
 
 function Hostels(): JSX.Element {
   return (
-    <div style={{ height: '100%', padding: '0 5%' }}>
-      <UserOverview />
+    <div style={{ height: '100%' }}>
       <List columns={columns} data={data} title="Liste des hôtels" />
     </div>
   );
