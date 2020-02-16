@@ -1,14 +1,24 @@
-.DashboardNav {
+.sidebar {
   top: 0;
   left: 0;
-  width: 235px;
-  height: calc(100vh-80px);
+  width: 15%;
+  height: 100%;
   border-right: 1px solid lightgrey;
-  margin-right: 15px;
+  &-logo {
+    height: 7%;
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    > img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
+  }
   &-container {
     margin: auto;
     text-align: center;
   }
+
   &-img {
     width: 150px !important;
     height: 150px !important;

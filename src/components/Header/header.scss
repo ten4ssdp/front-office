@@ -1,26 +1,50 @@
 .Header {
-  height: 80px;
+  height: 7%;
+  width: 100%;
   border-bottom: 1px solid lightgrey;
-  &-container {
-    display: flex;
-    align-items: center;
-    padding: 15px 10px;
+  display: flex;
+  align-items: center;
+
+  &-button {
+    background: #006bb4;
+    border-color: #006bb4;
   }
 
-  &-logo {
-    height: auto;
-    width: 235px;
-    object-fit: contain;
-  }
   &-nav {
+    height: 100%;
+    width: 80%;
     &-container {
       display: flex;
-      margin-left: 50px;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding: 0 5%;
+      font: {
+        size: 1rem;
+        weight: 300;
+      }
+      a {
+        color: black;
+
+        &.active {
+          position: relative;
+          font-weight: 500;
+
+          span {
+            position: absolute;
+            display: block;
+            width: 30px;
+            height: 6px;
+            bottom: -40%;
+            left: 0;
+            background: #006bb4;
+          }
+        }
+      }
     }
 
     &-element {
-      margin-right: 55px;
-      cursor: pointer;
+      margin-right: 8%;
     }
   }
 }
