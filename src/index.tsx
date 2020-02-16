@@ -9,6 +9,7 @@ import {
 import * as serviceWorker from './serviceWorker';
 // import PrivateRoute from './components/ProtectedRoute';
 import './assets/styles/index.scss';
+import 'antd/dist/antd.css';
 
 import Home from './views/Home';
 import StoreProvider from './store/MainStore';
