@@ -9,6 +9,7 @@ const initialState: MainState = {
   title: 'Samu Social de Paris Planning Maker',
   modalOpen: false,
   dayOff: [moment(new Date(), dateFormat), moment(new Date(), dateFormat)],
+  areaSelected: '',
   events: [
     {
       id: 0,
