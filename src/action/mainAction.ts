@@ -1,4 +1,4 @@
-import { TOGGLE_MODAL, SET_DAY_OFF } from '../constant/mainStore';
+import { TOGGLE_MODAL, SET_DAY_OFF, SELECT_AREA } from '../constant/mainStore';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const toggleModal = (dispatch: any, payload: boolean) => {
@@ -8,9 +8,16 @@ export const toggleModal = (dispatch: any, payload: boolean) => {
   });
 };
 
-export const setDayOff = (dispatch: any, payload: any) => {
+export const setDayOff = (dispatch: any, payload: string[]) => {
   return dispatch({
     type: SET_DAY_OFF,
+    payload
+  });
+};
+
+export const selectArea = (dispatch: any, payload: string) => {
+  return dispatch({
+    type: SELECT_AREA,
     payload
   });
 };

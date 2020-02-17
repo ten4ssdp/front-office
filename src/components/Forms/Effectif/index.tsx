@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input, Button } from 'antd';
+import SelectArea from 'components/SelectArea';
 
 export default function EffectifForm() {
   return (
@@ -17,9 +18,21 @@ export default function EffectifForm() {
         </label>
       </fieldset>
       <fieldset>
-        <label htmlFor="area">
-          Nombre de chambres
-          <Input id="aera" allowClear />
+        <label htmlFor="email">
+          Adresse mail
+          <Input id="email" allowClear />
+        </label>
+      </fieldset>
+      <fieldset>
+        <label htmlFor="password">
+          Mot de passe
+          <Input id="password" allowClear />
+        </label>
+      </fieldset>
+      <fieldset>
+        <label htmlFor="aera">
+          Secteur
+          <SelectArea id="aera" />
         </label>
       </fieldset>
       <fieldset>

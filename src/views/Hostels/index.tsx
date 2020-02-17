@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import List from '../../components/List';
 import { Icon, Button, PageHeader, Popconfirm } from 'antd';
+
+import List from 'components/List';
 import {
   HotelsDatasInterface,
   ColumnsInterface

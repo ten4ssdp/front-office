@@ -17,15 +17,15 @@ export type EffectifsDatasInterface = {
   key: string | number;
   firstname: string;
   lastname: string;
-  job: string;
   area: string;
 };
 
 export type CarsDatasInterface = {
   key: string | number;
   carId: string;
+  carModel: string;
   city: string;
-  available: boolean;
+  available: boolean | string;
   parkingAddress: string;
 };
 
