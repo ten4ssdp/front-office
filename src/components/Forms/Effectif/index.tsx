@@ -18,6 +18,18 @@ export default function EffectifForm() {
         </label>
       </fieldset>
       <fieldset>
+        <label htmlFor="email">
+          Adresse mail
+          <Input id="email" allowClear />
+        </label>
+      </fieldset>
+      <fieldset>
+        <label htmlFor="password">
+          Mot de passe
+          <Input id="password" allowClear />
+        </label>
+      </fieldset>
+      <fieldset>
         <label htmlFor="aera">
           Secteur
           <SelectArea id="aera" />

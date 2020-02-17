@@ -1,5 +1,6 @@
 import React from 'react';
 import Calendar from '@toast-ui/react-calendar';
+import moment from 'moment';
 import 'tui-calendar/dist/tui-calendar.css';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
@@ -9,26 +10,41 @@ import './calendar.scss';
 const MyCalendar = () => {
   const start = new Date();
   const end = new Date(new Date().setHours(start.getHours() + 1));
+  console.log(
+    new Date(new Date().setHours(start.getHours() + 3)).toISOString()
+  );
   return (
     <div className="calendar">
       <Calendar
+        taskView={false}
         height="50%"
         week={{
+          startDayOfWeek: 1,
           hourStart: 9,
-          hourEnd: 20
+          hourEnd: 20,
+          workweek: true,
+          daynames: [
+            'Dimanche',
+            'Lundi',
+            'Mardi',
+            'Mercredi',
+            'Jeudi',
+            'Vendredi',
+            'Samedi'
+          ]
         }}
         calendars={[
           {
             id: '0',
             name: 'Urgence',
-            bgColor: '#9e5fff',
-            borderColor: '#9e5fff'
+            bgColor: '#D50000',
+            borderColor: '#D50000'
           },
           {
             id: '1',
             name: 'Visite',
-            bgColor: '#00a9ff',
-            borderColor: '#00a9ff'
+            bgColor: '#2C98F0',
+            borderColor: '#2C98F0'
           }
         ]}
         disableDblClick={true}
@@ -38,12 +54,59 @@ const MyCalendar = () => {
         schedules={[
           {
             id: '1',
-            calendarId: '0',
-            title: 'TOAST UI Calendar Study',
+            calendarId: '1',
+            title: 'Visite Maximus',
             category: 'time',
             dueDateClass: '',
+            color: 'white',
             start: start.toISOString(),
-            end: end
+            end,
+            location: 'paris'
+          },
+          {
+            id: '2',
+            calendarId: '1',
+            title: 'Practice',
+            dueDateClass: '',
+            color: 'white',
+            category: 'time',
+
+            start: new Date(
+              new Date().setHours(start.getHours() + 3)
+            ).toISOString(),
+            end: new Date(
+              new Date().setHours(start.getHours() + 4)
+            ).toISOString()
+          },
+          {
+            id: '3',
+            calendarId: '1',
+            title: 'FE Workshop',
+            dueDateClass: '',
+            category: 'time',
+            start: new Date(
+              new Date().setHours(start.getHours() + 6)
+            ).toISOString(),
+            end: new Date(new Date().setHours(start.getHours() + 8)),
+            isReadOnly: true
+          },
+          {
+            id: '4',
+            calendarId: '1',
+            title: 'FE Workshop',
+            dueDateClass: '',
+            category: 'time',
+            start: new Date(
+              new Date(start.setHours(start.getHours())).setDate(
+                start.getDate() + 1
+              )
+            ).toISOString(),
+            end: new Date(
+              new Date(start.setHours(start.getHours() + 4)).setDate(
+                start.getDate() + 1
+              )
+            ).toISOString(),
+            isReadOnly: true
           }
         ]}
         timezones={[

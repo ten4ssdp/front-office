@@ -33,7 +33,7 @@ const columns: ColumnsInterface[] = [
       <div>
         <Icon type="edit" onClick={() => console.log('edit')} />
         <Popconfirm
-          title="Êtes-vous sur de vouloir supprimer cette hôtel ?"
+          title="Êtes-vous sur de vouloir supprimer cet intervenant ?"
           onConfirm={() => console.log('delete')}
           okText="Oui"
           cancelText="Non"
@@ -71,7 +71,7 @@ function UserList(): JSX.Element {
         style={{ paddingTop: '5%', paddingBottom: '5%' }}
       />
       <List columns={columns} data={data} />
-      <ModalForm title="Ajouter un hôtel">
+      <ModalForm title="Ajouter un intervenant">
         <EffectifForm />
       </ModalForm>
     </div>

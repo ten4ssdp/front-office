@@ -78,7 +78,7 @@ function Vehicles(): JSX.Element {
         style={{ paddingTop: '5%', paddingBottom: '5%' }}
       />
       <List columns={columns} data={data} />
-      <ModalForm title="Ajouter un hôtel">
+      <ModalForm title="Ajouter un véhicule">
         <CarForm />
       </ModalForm>
     </div>
