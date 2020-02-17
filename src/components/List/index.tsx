@@ -17,14 +17,12 @@ export default function List(props: PropsList) {
 
   return (
     <div>
-      <header>
-        <h3>{props.title}</h3>
-      </header>
       <div style={{ padding: '0 2%' }}>
         <Table
           rowSelection={rowSelection}
           columns={props.columns}
           dataSource={props.data as any}
+          tableLayout="fixed"
         />
       </div>
     </div>

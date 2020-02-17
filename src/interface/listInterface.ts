@@ -35,5 +35,4 @@ export interface PropsList {
     | HotelsDatasInterface[]
     | EffectifsDatasInterface[]
     | CarsDatasInterface[];
-  title: string;
 }
