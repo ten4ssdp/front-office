@@ -1,4 +1,5 @@
 import { MainState } from '../interface/storeInterface';
+import { TOGGLE_MODAL, SET_DAY_OFF } from 'constant/mainStore';
 function mainReducer(
   // state: { title: string, events: []},
   state: MainState,
@@ -6,10 +7,13 @@ function mainReducer(
   action: { type: string; payload: MainState }
 ) {
   switch (action.type) {
+    case TOGGLE_MODAL:
+      return { ...state, modalOpen: action.payload };
+    case SET_DAY_OFF:
+      return { ...state, dayOff: action.payload };
     default:
       return state;
   }
 }
 
 export default mainReducer;
-
