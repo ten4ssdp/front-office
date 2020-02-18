@@ -2,7 +2,7 @@ export interface ColumnsInterface {
   title: string;
   dataIndex: string;
   key?: string;
-  render?: () => any;
+  render?: (text?: string, record?: any) => any;
 }
 
 export type HotelsDatasInterface = {

@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { Input, Button } from 'antd';
-import useAuth from '../../hooks/useAuth';
-import { UserState } from '../../interface/userInterface';
-import { UserStore } from '../../store/UserStore';
 import { useHistory } from 'react-router-dom';
+
+import { Input, Button } from 'antd';
+import useAuth from '../../../hooks/useAuth';
+import { UserState } from '../../../interface/userInterface';
+import { UserStore } from '../../../store/UserStore';
 
 import './auth-form.scss';
 
@@ -64,7 +65,7 @@ export default function AuthForm(): JSX.Element {
             />
           </label>
         </fieldset>
-        <Button htmlType="submit" color="primary">
+        <Button htmlType="submit" className="auth-form__btn">
           S&apos;identifier
         </Button>
       </form>

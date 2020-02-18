@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Icon, Button, PageHeader, Popconfirm } from 'antd';
+import { Button, PageHeader } from 'antd';
 
 import List from 'components/List';
 import {
@@ -10,6 +10,7 @@ import ModalForm from 'components/Modal/ModalForm';
 import HotelForm from 'components/Forms/Hotel';
 import { MainStore } from 'store/MainStore';
 import { toggleModal } from 'action/mainAction';
+import Action from 'components/Action';
 
 const columns: ColumnsInterface[] = [
   {
@@ -33,18 +34,11 @@ const columns: ColumnsInterface[] = [
     dataIndex: '',
     key: 'x',
     // eslint-disable-next-line react/display-name
-    render: () => (
-      <div>
-        <Icon type="edit" onClick={() => console.log('edit')} />
-        <Popconfirm
-          title="Êtes-vous sur de vouloir supprimer cette hôtel ?"
-          onConfirm={() => console.log('delete')}
-          okText="Oui"
-          cancelText="Non"
-        >
-          <Icon type="delete" />
-        </Popconfirm>
-      </div>
+    render: (text, record) => (
+      <Action
+        wording="Êtes-vous sur de vouloir supprimer cette hôtel ?"
+        record={record}
+      />
     )
   }
 ];
@@ -68,7 +62,7 @@ function Hostels(): JSX.Element {
       <PageHeader
         title="Liste des hôtels"
         subTitle="Île de France"
-        extra={[
+        footer={[
           <Button key="1" onClick={() => toggleModal(dispatch, true)}>
             Ajouter un hôtel
           </Button>
