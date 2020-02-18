@@ -26,11 +26,14 @@
     }
   }
 
-  &__toogle {
-    margin-top: 20px;
-    & span {
-      cursor: pointer;
-      color: blue;
+  &__btn {
+    background-color: #006bb4;
+    border-color: #006bb4;
+    color: white;
+
+    &:hover {
+      background-color: white;
+      color: #006bb4;
     }
   }
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Icon, Button, PageHeader, Popconfirm } from 'antd';
+import { Button, PageHeader } from 'antd';
 
 import List from 'components/List';
 import ModalForm from 'components/Modal/ModalForm';
@@ -10,6 +10,7 @@ import {
   EffectifsDatasInterface
 } from 'interface/listInterface';
 import EffectifForm from 'components/Forms/Effectif';
+import Action from 'components/Action';
 
 const columns: ColumnsInterface[] = [
   {
@@ -30,17 +31,7 @@ const columns: ColumnsInterface[] = [
     key: 'x',
     // eslint-disable-next-line react/display-name
     render: () => (
-      <div>
-        <Icon type="edit" onClick={() => console.log('edit')} />
-        <Popconfirm
-          title="Êtes-vous sur de vouloir supprimer cet intervenant ?"
-          onConfirm={() => console.log('delete')}
-          okText="Oui"
-          cancelText="Non"
-        >
-          <Icon type="delete" />
-        </Popconfirm>
-      </div>
+      <Action wording="Êtes-vous sur de vouloir supprimer cet intervenant ?" />
     )
   }
 ];
@@ -63,7 +54,7 @@ function UserList(): JSX.Element {
       <PageHeader
         title="Liste des intervenants"
         subTitle="Île de France"
-        extra={[
+        footer={[
           <Button key="1" onClick={() => toggleModal(dispatch, true)}>
             Ajouter un intenvant
           </Button>

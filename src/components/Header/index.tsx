@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { Button } from 'antd';
+import Button from 'antd/lib/button';
 
 import './header.scss';
 
@@ -39,7 +39,6 @@ function Header(): JSX.Element {
 
       <Button
         type="primary"
-        shape="round"
         onClick={() => history.push('/auth')}
         icon="logout"
         htmlType="button"

@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
-import { Tag, Button } from 'antd';
+import { Tag } from 'antd';
 
 import Overview from '..';
 import { MainStore } from 'store/MainStore';
-import { toggleModal } from 'action/mainAction';
-import ModalDatePicker from 'components/Modal/ModalDatePicker';
 
 export default function PlanningOVerview() {
   const { dispatch } = useContext(MainStore);
@@ -12,13 +10,9 @@ export default function PlanningOVerview() {
   return (
     <Overview>
       <h3>Binone {'personne 1/ personne 2'}</h3>
-      <p>secteur {'92/94'}</p>
-      <Tag closable>personne 1</Tag>
-      <Tag closable>personne 2</Tag>
-      <Button onClick={() => toggleModal(dispatch, true)}>
-        Signaler une absence
-      </Button>
-      <ModalDatePicker />
+      <p>Secteur {'92/94'}</p>
+      <Tag>personne 1</Tag>
+      <Tag>personne 2</Tag>
     </Overview>
   );
 }
