@@ -1,5 +1,9 @@
 # Front office for SSDP
 
+### Developper
+- OUAISH Reda
+- TRAVAILLEUR Lorick
+
 ### Description
 
 This projet is a planning maker app make with React and TypeScript boostraped by create-react-app
