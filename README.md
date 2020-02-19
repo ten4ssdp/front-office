@@ -20,6 +20,10 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 - Scss
 - Ant Design
 
+### State Management
+- React Context (with reducer) - redux-like
+
+
 ### How it works
 
 - ```git clone <REPOSITORY URL>```
@@ -28,9 +32,3 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 
 ### Testing
 
-E2E / Integration test:
-
-- Run with ui -> ```npm run cypress ```
-  - Then select one test file to run or all of them.
-
-- Without ui ->  ```npm run cypress:headless ```
