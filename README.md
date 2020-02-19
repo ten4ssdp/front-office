@@ -1,6 +1,6 @@
 # Front office for SSDP
 
-### Developper
+### Developers
 - OUAISH Reda
 - TRAVAILLEUR Lorick
 
