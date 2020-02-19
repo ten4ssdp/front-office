@@ -17,8 +17,8 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 - Jest
 - Enzyme
 - Cypress
-- Sass
-- UI library(not define yet)
+- Scss
+- Ant Design
 
 ### How it works
 
