@@ -75,7 +75,6 @@ function Hostels(): JSX.Element {
     const hotel = state.hostels.find(
       (hostel: any) => hostel.id === state.idDetailToShow
     );
-    console.log(hotel);
     setHotel(hotel);
   }, [state.idDetailToShow]);
 

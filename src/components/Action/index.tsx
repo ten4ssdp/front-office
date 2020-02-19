@@ -9,7 +9,6 @@ import {
   setIdDetailToShow
 } from 'action/mainAction';
 import { MainStore } from 'store/MainStore';
-import { BASE_URL } from '../../utils/constant';
 
 interface Props {
   wording: string;
@@ -23,9 +22,12 @@ export default function Action(props: Props) {
   const { dispatch } = useContext(MainStore);
 
   const handleDelete = async (id: string | number) => {
-    const deletedhotel = await fetch(`${BASE_URL}/{${props.endpoint}/${id}`, {
-      method: 'DELETE'
-    });
+    const deletedhotel = await fetch(
+      `http://localhost:5000/api/${props.endpoint}/${props.record.key}`,
+      {
+        method: 'DELETE'
+      }
+    );
     console.log(deletedhotel);
     await refreshApp(dispatch, true);
     await message.success('Supprimé avec Succès');

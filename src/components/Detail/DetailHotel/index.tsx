@@ -70,6 +70,7 @@ export default function DetailHotel(props: any) {
               setIdToEdit(dispatch, props.hotel?.id);
               toggleModal(dispatch, true);
               setIdDetailToShow(dispatch, '');
+              console.log(props.hotel?.id);
             }}
             htmlType="button"
             type="primary"

@@ -21,11 +21,7 @@ export default function HotelForm() {
 
   const [values, handleChange, setValues] = useForm(INIATIAL_STATE);
 
-  useEffect(() => {
-    setValues(INIATIAL_STATE);
-  }, [state.idToEdit]);
-
-  let body = {
+  const body = {
     name: values.name,
     address: values.address,
     zipCode: values.postalCode,
@@ -34,11 +30,16 @@ export default function HotelForm() {
     sectorId: state.areaSelected
   };
 
+  useEffect(() => {
+    setValues(INIATIAL_STATE);
+  }, [state.idToEdit]);
+
   if (state.idToEdit !== '' && values.name === '') {
     const editableHotel = state.hostels.find(
       (hostel: any) => hostel.id === state.idToEdit
     );
 
+    console.log('state.areaSelected', state.areaSelected);
     setValues({
       name: editableHotel.name,
       address: editableHotel.address,
@@ -46,40 +47,43 @@ export default function HotelForm() {
       city: editableHotel.city,
       availableRooms: editableHotel.roomCount
     });
-
-    body = {
-      name: editableHotel.name,
-      address: editableHotel.address,
-      zipCode: editableHotel.zipCode,
-      city: editableHotel.city,
-      roomCount: editableHotel.roomCount,
-      sectorId: editableHotel.sectorId
-    };
   }
 
   const handleSubmit = (type: string) => async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+    console.log('body 1', body);
 
     let hostel;
+    try {
+      if (type === 'edit') {
+        console.log('body', body);
+        const editableHotel = state.hostels.find(
+          (hostel: any) => hostel.id === state.idToEdit
+        );
 
-    switch (type) {
-      case 'edit':
+        console.log('editableHotel?.sectorId', editableHotel?.sectorId);
+        console.log('editableHotel', editableHotel);
+
+        const newbody = {
+          ...body,
+          sectorId: +editableHotel?.sectorId
+        };
+
         hostel = await fetch(
           `http://localhost:5000/api/hotel/${state.idToEdit}`,
           {
             method: 'PUT',
-            body: JSON.stringify(body),
+            body: JSON.stringify(newbody),
             headers: {
               'content-type': 'application/json'
             }
           }
         );
-        await message.success('Modifié avec Succès');
-        break;
+      }
 
-      case 'post':
+      if (type === 'post') {
         hostel = await fetch('http://localhost:5000/api/hotel', {
           method: 'POST',
           body: JSON.stringify(body),
@@ -87,16 +91,18 @@ export default function HotelForm() {
             'content-type': 'application/json'
           }
         });
-        await message.success('Ajouté avec Succès');
-        break;
+      }
+
+      console.log('[hostel]', hostel);
+
+      await setIdToEdit(dispatch, '');
+      await setValues(INIATIAL_STATE);
+      await refreshApp(dispatch, true);
+      await message.success("L'opération à bien été réalisé");
+      await toggleModal(dispatch, false);
+    } catch (error) {
+      await message.error("Une erreur s'est produite mlors de cette opération");
     }
-
-    console.log('[hostel]', hostel);
-
-    await setIdToEdit(dispatch, '');
-    await setValues(INIATIAL_STATE);
-    await refreshApp(dispatch, true);
-    await toggleModal(dispatch, false);
   };
 
   return (
