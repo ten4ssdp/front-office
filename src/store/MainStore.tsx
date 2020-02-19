@@ -10,20 +10,11 @@ const initialState: MainState = {
   modalOpen: false,
   dayOff: [moment(new Date(), dateFormat), moment(new Date(), dateFormat)],
   areaSelected: '',
-  events: [
-    {
-      id: 0,
-      title: 'Hotel Ibis',
-      start: new Date(),
-      end: new Date()
-    },
-    {
-      id: 1,
-      title: 'Formule 1',
-      start: new Date(),
-      end: new Date()
-    }
-  ]
+  idDetailToShow: '',
+  hostels: [],
+  cars: [],
+  idToEdit: '',
+  refresh: false
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

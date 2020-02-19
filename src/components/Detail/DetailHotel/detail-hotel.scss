@@ -1,0 +1,29 @@
+.title {
+  margin-bottom: 10%;
+  padding: 5%;
+  font: {
+    weight: 600;
+    size: 1.6rem;
+  }
+}
+
+.subtitle {
+  margin-bottom: 3%;
+  font: {
+    weight: 500;
+    size: 1.2rem;
+  }
+}
+
+.address {
+  > span:first-child {
+    margin-right: 3%;
+  }
+}
+
+.empty {
+  text-align: center;
+  > p {
+    font-size: 1rem;
+  }
+}

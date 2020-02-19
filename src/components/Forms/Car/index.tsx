@@ -4,34 +4,16 @@ import { Input, Button } from 'antd';
 export default function CarForm() {
   return (
     <form>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="carId">
           Immatriculation
-          <Input id="carId" allowClear />
+          <Input type="text" name="address_1" id="carId" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="carModel">
           Modèle
-          <Input id="carModel" allowClear />
-        </label>
-      </fieldset>
-      <fieldset>
-        <label htmlFor="address">
-          Adresse parking
-          <Input id="address" allowClear />
-        </label>
-      </fieldset>
-      <fieldset>
-        <label htmlFor="postalCode">
-          Code postal
-          <Input id="hotelName" allowClear />
-        </label>
-      </fieldset>
-      <fieldset>
-        <label htmlFor="city">
-          Ville
-          <Input id="city" allowClear />
+          <Input type="text" name="address_1" id="carModel" allowClear />
         </label>
       </fieldset>
       <Button htmlType="submit">Ajouter</Button>

@@ -69,7 +69,6 @@ const MyCalendar = () => {
             dueDateClass: '',
             color: 'white',
             category: 'time',
-
             start: new Date(
               new Date().setHours(start.getHours() + 3)
             ).toISOString(),

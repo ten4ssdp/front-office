@@ -9,3 +9,10 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+.fielset {
+  margin-bottom: 3%;
+  > span {
+    margin-top: 3%;
+  }
+}

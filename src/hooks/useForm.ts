@@ -15,7 +15,7 @@ function useForm(initialValues: UserState | MainState) {
     setvalues({ ...values, [name]: value });
   };
 
-  return [values, handleChange];
+  return [values, handleChange, setvalues];
 }
 
 export default useForm;

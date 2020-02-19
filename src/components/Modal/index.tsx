@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Modal from 'antd/lib/modal';
 import { MainStore } from 'store/MainStore';
-import { toggleModal } from 'action/mainAction';
+import { toggleModal, setIdToEdit } from 'action/mainAction';
 
 interface Props {
   title: string;
@@ -17,10 +17,13 @@ export default function ModalContainer(props: Props) {
       title={props.title}
       visible={state.modalOpen}
       onOk={() => {
-        props.fn();
         toggleModal(dispatch, false);
+        setIdToEdit(dispatch, '');
       }}
-      onCancel={() => toggleModal(dispatch, false)}
+      onCancel={() => {
+        toggleModal(dispatch, false);
+        setIdToEdit(dispatch, '');
+      }}
     >
       {props.children}
     </Modal>

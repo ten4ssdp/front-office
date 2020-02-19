@@ -5,58 +5,58 @@ import SelectArea from 'components/SelectArea';
 export default function EffectifForm() {
   return (
     <form>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="lastname">
           Nom
-          <Input id="lastname" allowClear />
+          <Input type="text" name="lastname" id="lastname" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="firstname">
           Prénom
-          <Input id="firstname" allowClear />
+          <Input type="text" name="firstname" id="firstname" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="email">
           Adresse mail
-          <Input id="email" allowClear />
+          <Input type="text" name="email" id="email" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="password">
           Mot de passe
-          <Input id="password" allowClear />
+          <Input type="text" name="password" id="password" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="aera">
           Secteur
           <SelectArea id="aera" />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="address_1">
           Adresse 1
-          <Input id="address_1" allowClear />
+          <Input type="text" name="address_1" id="address_1" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="address_2">
           Adresse 2
-          <Input id="address_2" allowClear />
+          <Input type="text" name="address_2" id="address_2" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="postalCode">
           Code postal
-          <Input id="postalCode" allowClear />
+          <Input type="text" name="postalCode" id="postalCode" allowClear />
         </label>
       </fieldset>
-      <fieldset>
+      <fieldset className="fielset">
         <label htmlFor="city">
           Ville
-          <Input id="city" allowClear />
+          <Input type="text" name="city" id="city" allowClear />
         </label>
       </fieldset>
 

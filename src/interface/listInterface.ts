@@ -31,6 +31,7 @@ export type CarsDatasInterface = {
 
 export interface PropsList {
   columns: ColumnsInterface[];
+  loading?: boolean;
   data:
     | HotelsDatasInterface[]
     | EffectifsDatasInterface[]

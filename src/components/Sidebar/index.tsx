@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { UserStore } from '../../store/UserStore';
 
 import './sidebar.scss';
+import SelectTeam from 'components/SelectTeam';
 
 function Sidebar(): JSX.Element {
   const { userState } = useContext(UserStore);
@@ -26,6 +27,7 @@ function Sidebar(): JSX.Element {
             {userState.firstname} {userState.lastname}
           </p>
         }
+        <SelectTeam />
       </div>
     </div>
   );

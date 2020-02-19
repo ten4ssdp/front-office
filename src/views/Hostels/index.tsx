@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, PageHeader } from 'antd';
 
 import List from 'components/List';
@@ -9,8 +9,11 @@ import {
 import ModalForm from 'components/Modal/ModalForm';
 import HotelForm from 'components/Forms/Hotel';
 import { MainStore } from 'store/MainStore';
-import { toggleModal } from 'action/mainAction';
+import { toggleModal, setHostelsDatasToStore } from 'action/mainAction';
 import Action from 'components/Action';
+import useFetch from 'hooks/useFetch';
+import moment from 'moment';
+import DetailHotel from 'components/Detail/DetailHotel';
 
 const columns: ColumnsInterface[] = [
   {
@@ -38,24 +41,43 @@ const columns: ColumnsInterface[] = [
       <Action
         wording="Êtes-vous sur de vouloir supprimer cette hôtel ?"
         record={record}
+        endpoint="hotel"
+        showDetail={true}
       />
     )
   }
 ];
 
-const data: HotelsDatasInterface[] = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    hotel: `hotel Ibis`,
-    visite: Date.now(),
-    rate: 32,
-    area: `London, Park Lane no. ${i}`
-  });
-}
-
 function Hostels(): JSX.Element {
-  const { dispatch } = useContext(MainStore);
+  const [hotelsDatas, setHotelsData] = useState<HotelsDatasInterface[] | []>(
+    []
+  );
+  const [hotel, setHotel] = useState<any>(null);
+
+  const { dispatch, state } = useContext(MainStore);
+
+  const { isloading, datas } = useFetch('http://localhost:5000/api/hotel');
+  useEffect(() => {
+    !isloading && setHostelsDatasToStore(dispatch, datas);
+    const arr: any = datas.map((d: any) => ({
+      key: d.id,
+      hotel: d.name,
+      area: d?.sector?.name,
+      visite: d.visits[0]?.date
+        ? moment(d.visits[0]?.date).format('DD/MM/YYYY')
+        : 'Pas de Date',
+      rate: d.visits[0]?.rate ? d.visits[0]?.rate : 'Pas de note'
+    }));
+    setHotelsData(arr);
+  }, [isloading]);
+
+  useEffect(() => {
+    const hotel = state.hostels.find(
+      (hostel: any) => hostel.id === state.idDetailToShow
+    );
+    console.log(hotel);
+    setHotel(hotel);
+  }, [state.idDetailToShow]);
 
   return (
     <div style={{ height: '100%' }}>
@@ -69,10 +91,11 @@ function Hostels(): JSX.Element {
         ]}
         style={{ paddingTop: '5%', paddingBottom: '5%' }}
       />
-      <List columns={columns} data={data} />
+      <List loading={isloading} columns={columns} data={hotelsDatas} />
       <ModalForm title="Ajouter un hôtel">
         <HotelForm />
       </ModalForm>
+      <DetailHotel hotel={hotel} />
     </div>
   );
 }

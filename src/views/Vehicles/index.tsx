@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, PageHeader } from 'antd';
 
 import List from 'components/List';
 import { ColumnsInterface, CarsDatasInterface } from 'interface/listInterface';
-import { toggleModal } from 'action/mainAction';
+import { toggleModal, setCarsDatasToStore } from 'action/mainAction';
 import { MainStore } from 'store/MainStore';
 import ModalForm from 'components/Modal/ModalForm';
 import CarForm from 'components/Forms/Car';
 import Action from 'components/Action';
+import useFetch from 'hooks/useFetch';
 
 const columns: ColumnsInterface[] = [
   {
@@ -54,7 +55,26 @@ for (let i = 0; i < 8; i++) {
 }
 
 function Vehicles(): JSX.Element {
+  const [carsDatas, setCarsDatas] = useState<CarsDatasInterface[] | []>([]);
+
   const { dispatch } = useContext(MainStore);
+
+  const { isloading, error, datas } = useFetch(
+    'http://localhost:5000/api/vehicle'
+  );
+
+  useEffect(() => {
+    !isloading && setCarsDatasToStore(dispatch, datas);
+    const arr: any = datas.map((d: any) => ({
+      key: d.id,
+      carId: d.numberPlate,
+      carModel: d?.type,
+      city: 'none',
+      available: true,
+      parkingAddress: '38 rue adresse'
+    }));
+    setCarsDatas(arr);
+  }, [isloading]);
 
   return (
     <div className="Vehicles">
@@ -68,7 +88,7 @@ function Vehicles(): JSX.Element {
         ]}
         style={{ paddingTop: '5%', paddingBottom: '5%' }}
       />
-      <List columns={columns} data={data} />
+      <List loading={isloading} columns={columns} data={carsDatas} />
       <ModalForm title="Ajouter un véhicule">
         <CarForm />
       </ModalForm>
