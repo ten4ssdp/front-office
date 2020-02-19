@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, PageHeader } from 'antd';
+import { Button, PageHeader, Badge } from 'antd';
 
 import List from 'components/List';
 import { ColumnsInterface, CarsDatasInterface } from 'interface/listInterface';
@@ -9,6 +9,8 @@ import ModalForm from 'components/Modal/ModalForm';
 import CarForm from 'components/Forms/Car';
 import Action from 'components/Action';
 import useFetch from 'hooks/useFetch';
+import DetailCar from 'components/Detail/DetailCar';
+import { CarFromDB } from 'interface/car';
 
 const columns: ColumnsInterface[] = [
   {
@@ -21,7 +23,14 @@ const columns: ColumnsInterface[] = [
   },
   {
     title: 'Disponible',
-    dataIndex: 'available'
+    dataIndex: 'available',
+    // eslint-disable-next-line react/display-name
+    render: (_text, record) =>
+      record.available ? (
+        <Badge status="success" text="Disponible" />
+      ) : (
+        <Badge status="error" text="Pas disponible" />
+      )
   },
   {
     title: 'Adresse',
@@ -36,45 +45,47 @@ const columns: ColumnsInterface[] = [
     dataIndex: '',
     key: 'x',
     // eslint-disable-next-line react/display-name
-    render: () => (
-      <Action wording="Êtes-vous sur de vouloir supprimer ce véhicule ?" />
+    render: (text, record) => (
+      <Action
+        record={record}
+        wording="Êtes-vous sur de vouloir supprimer ce véhicule ?"
+        showDetail={true}
+        endpoint="vehicle"
+      />
     )
   }
 ];
 
-const data: CarsDatasInterface[] = [];
-for (let i = 0; i < 8; i++) {
-  data.push({
-    key: i,
-    carId: `XT-${i}-DE`,
-    carModel: 'Citroen C3',
-    city: 'Ivry',
-    available: 'disponible',
-    parkingAddress: '38 rue adresse'
-  });
-}
-
 function Vehicles(): JSX.Element {
   const [carsDatas, setCarsDatas] = useState<CarsDatasInterface[] | []>([]);
+  const [car, setCar] = useState<CarFromDB | null>(null);
 
-  const { dispatch } = useContext(MainStore);
+  const { dispatch, state } = useContext(MainStore);
 
   const { isloading, error, datas } = useFetch(
-    'http://localhost:5000/api/vehicle'
+    'http://localhost:5000/api/vehicles'
   );
 
   useEffect(() => {
     !isloading && setCarsDatasToStore(dispatch, datas);
-    const arr: any = datas.map((d: any) => ({
+    const arr = datas.map((d: CarFromDB) => ({
       key: d.id,
       carId: d.numberPlate,
       carModel: d?.type,
-      city: 'none',
+      city: d?.parking?.city,
       available: true,
-      parkingAddress: '38 rue adresse'
+      parkingAddress: d?.parking?.address
     }));
     setCarsDatas(arr);
+    setCarsDatasToStore(dispatch, datas);
   }, [isloading]);
+
+  useEffect(() => {
+    const car = state.cars.find(
+      (car: CarFromDB) => car.id === state.idDetailToShow
+    );
+    setCar(car);
+  }, [state.idDetailToShow]);
 
   return (
     <div className="Vehicles">
@@ -92,6 +103,7 @@ function Vehicles(): JSX.Element {
       <ModalForm title="Ajouter un véhicule">
         <CarForm />
       </ModalForm>
+      {car && <DetailCar car={car} />}
     </div>
   );
 }

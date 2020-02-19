@@ -9,7 +9,7 @@ const initialState: MainState = {
   title: 'Samu Social de Paris Planning Maker',
   modalOpen: false,
   dayOff: [moment(new Date(), dateFormat), moment(new Date(), dateFormat)],
-  areaSelected: 'MA',
+  areaSelected: '',
   idDetailToShow: '',
   hostels: [],
   cars: [],
@@ -23,7 +23,7 @@ export const MainStore = createContext<MainState | any>(initialState);
 export default function StoreProvider({
   children
 }: JSX.ElementChildrenAttribute): JSX.Element {
-  const [state, dispatch] = React.useReducer(mainReducer, initialState);
+  const [state, dispatch] = React.useReducer<any>(mainReducer, initialState);
   return (
     <MainStore.Provider value={{ state, dispatch }}>
       {children}

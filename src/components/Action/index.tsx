@@ -23,15 +23,16 @@ export default function Action(props: Props) {
 
   const handleDelete = async (id: string | number) => {
     const deletedhotel = await fetch(
-      `http://localhost:5000/api/${props.endpoint}/${props.record.key}`,
+      `http://localhost:5000/api/${props.endpoint}/${id}`,
       {
         method: 'DELETE'
       }
     );
-    console.log(deletedhotel);
     await refreshApp(dispatch, true);
     await message.success('Supprimé avec Succès');
+    return deletedhotel;
   };
+
   return (
     <div>
       <Icon
@@ -43,7 +44,7 @@ export default function Action(props: Props) {
         style={{ marginRight: '10%', fontSize: '18px' }}
       />
       <Popconfirm
-        title={props.wording} //"Êtes-vous sur de vouloir supprimer ce véhicule ?"
+        title={props.wording}
         onConfirm={() => {
           handleDelete(props.record.key);
         }}
@@ -61,7 +62,7 @@ export default function Action(props: Props) {
             fontWeight: 600,
             cursor: 'pointer'
           }}
-          onClick={() => setIdDetailToShow(dispatch, props.record.key)}
+          onClick={() => setIdDetailToShow(dispatch, props.record?.key)}
         >
           Voir détail
         </p>

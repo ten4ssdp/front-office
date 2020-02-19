@@ -1,3 +1,5 @@
+import { ReactText } from 'react';
+
 export interface ColumnsInterface {
   title: string;
   dataIndex: string;
@@ -6,11 +8,11 @@ export interface ColumnsInterface {
 }
 
 export type HotelsDatasInterface = {
-  key: string | number;
+  key: string | number | ReactText;
   hotel: string;
-  visite: Date | number;
-  rate: number;
-  area: string;
+  visite: string | number;
+  rate: number | string;
+  area: string | ReactText;
 };
 
 export type EffectifsDatasInterface = {
