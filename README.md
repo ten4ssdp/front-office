@@ -14,9 +14,7 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 - TypeScript
 - Eslint (basic config)
 - Prettier
-- Jest
-- Enzyme
-- Cypress
+- Moment
 - Scss
 - Ant Design
 
