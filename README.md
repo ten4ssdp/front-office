@@ -27,6 +27,7 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 - ```git clone <REPOSITORY URL>```
 - cd to the folder and then `yarn` or `npm i` , it will install all the packages you need.
 - `yarn start` or `npm start` to start the project.
+- `yarn lint:fix` to run the linter
 
 ### Testing
 
