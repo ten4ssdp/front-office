@@ -14,6 +14,7 @@ import Action from 'components/Action';
 import useFetch from 'hooks/useFetch';
 import moment from 'moment';
 import DetailHotel from 'components/Detail/DetailHotel';
+import { HotelFromDB } from 'interface/hotel';
 
 const columns: ColumnsInterface[] = [
   {
@@ -52,28 +53,28 @@ function Hostels(): JSX.Element {
   const [hotelsDatas, setHotelsData] = useState<HotelsDatasInterface[] | []>(
     []
   );
-  const [hotel, setHotel] = useState<any>(null);
+  const [hotel, setHotel] = useState<HotelFromDB | null>(null);
 
   const { dispatch, state } = useContext(MainStore);
 
-  const { isloading, datas } = useFetch('http://localhost:5000/api/hotel');
+  const { isloading, datas } = useFetch('http://localhost:5000/api/hotels');
   useEffect(() => {
     !isloading && setHostelsDatasToStore(dispatch, datas);
-    const arr: any = datas.map((d: any) => ({
+    const arr: HotelsDatasInterface[] = datas.map((d: HotelFromDB) => ({
       key: d.id,
       hotel: d.name,
       area: d?.sector?.name,
-      visite: d.visits[0]?.date
-        ? moment(d.visits[0]?.date).format('DD/MM/YYYY')
+      visite: d?.visits?.[0]?.date
+        ? moment(d?.visits[0]?.date).format('DD/MM/YYYY')
         : 'Pas de Date',
-      rate: d.visits[0]?.rate ? d.visits[0]?.rate : 'Pas de note'
+      rate: d?.visits?.[0]?.rate ? d?.visits?.[0]?.rate : 'Pas de note'
     }));
     setHotelsData(arr);
   }, [isloading]);
 
   useEffect(() => {
     const hotel = state.hostels.find(
-      (hostel: any) => hostel.id === state.idDetailToShow
+      (hostel: HotelFromDB) => hostel.id === state.idDetailToShow
     );
     setHotel(hotel);
   }, [state.idDetailToShow]);
@@ -94,7 +95,7 @@ function Hostels(): JSX.Element {
       <ModalForm title="Ajouter un hôtel">
         <HotelForm />
       </ModalForm>
-      <DetailHotel hotel={hotel} />
+      {hotel && <DetailHotel hotel={hotel} />}
     </div>
   );
 }

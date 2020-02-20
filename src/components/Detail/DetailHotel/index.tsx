@@ -9,22 +9,30 @@ import {
   setIdDetailToShow,
   refreshApp
 } from 'action/mainAction';
-import './detail-hotel.scss';
 
-export default function DetailHotel(props: any) {
+import { HotelFromDB, LastestHotelVisits } from 'interface/hotel';
+
+import '../detail.scss';
+import crud from 'utils/crud';
+interface Props {
+  hotel: HotelFromDB;
+}
+
+export default function DetailHotel(props: Props) {
   const { dispatch } = useContext(MainStore);
   const handleDelete = async () => {
-    const deletedHotel = await fetch(
-      `http://localhost:5000/api/hotel/${props.hotel?.id}`,
-      {
-        method: 'DELETE'
+    const status = await crud.handleDelete('hotel', props.hotel?.id);
+    try {
+      if (status === 200) {
+        await setIdDetailToShow(dispatch, '');
+        await refreshApp(dispatch, true);
+        await message.success('Supprimé avec succès');
+      } else {
+        throw new Error();
       }
-    );
-    await setIdDetailToShow(dispatch, '');
-    await refreshApp(dispatch, true);
-    await message.success('Supprimé avec succès');
-
-    return deletedHotel;
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <Detail>
@@ -45,7 +53,7 @@ export default function DetailHotel(props: any) {
           <h3 className="subtitle">Dernière visite</h3>
           {props.hotel?.visits.length ? (
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {props.hotel?.visits.slice(0, 3).map((v: any) => (
+              {props.hotel?.visits.slice(0, 3).map((v: LastestHotelVisits) => (
                 <Card
                   title={`Visite du ${moment(v.date).format('DD/MM/YYYY')}`}
                   bordered={false}
@@ -70,7 +78,6 @@ export default function DetailHotel(props: any) {
               setIdToEdit(dispatch, props.hotel?.id);
               toggleModal(dispatch, true);
               setIdDetailToShow(dispatch, '');
-              console.log(props.hotel?.id);
             }}
             htmlType="button"
             type="primary"

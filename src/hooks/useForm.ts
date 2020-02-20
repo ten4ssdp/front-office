@@ -3,7 +3,7 @@ import { UserState } from '../interface/userInterface';
 import { MainState } from '../interface/storeInterface';
 type InputReact = (e: React.FormEvent<HTMLInputElement>) => void;
 
-function useForm(initialValues: UserState | MainState) {
+function useForm(initialValues: { [k: string]: string | number }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [values, setvalues] = useState<UserState | MainState | any>(
     initialValues

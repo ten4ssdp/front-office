@@ -7,8 +7,10 @@ import { setIdToEdit, refreshApp } from 'action/mainAction';
 import { toggleModal } from '../../../action/mainAction';
 import { message } from 'antd';
 import SelectArea from 'components/SelectArea';
+import { HotelFromDB } from 'interface/hotel';
+import crud from 'utils/crud';
 
-const INIATIAL_STATE = {
+const INITIAL_STATE = {
   name: '',
   address: '',
   postalCode: '',
@@ -19,7 +21,7 @@ const INIATIAL_STATE = {
 export default function HotelForm() {
   const { state, dispatch } = useContext(MainStore);
 
-  const [values, handleChange, setValues] = useForm(INIATIAL_STATE);
+  const [values, handleChange, setValues] = useForm(INITIAL_STATE);
 
   const body = {
     name: values.name,
@@ -31,15 +33,14 @@ export default function HotelForm() {
   };
 
   useEffect(() => {
-    setValues(INIATIAL_STATE);
+    setValues(INITIAL_STATE);
   }, [state.idToEdit]);
 
   if (state.idToEdit !== '' && values.name === '') {
     const editableHotel = state.hostels.find(
-      (hostel: any) => hostel.id === state.idToEdit
+      (hostel: HotelFromDB) => hostel.id === state.idToEdit
     );
 
-    console.log('state.areaSelected', state.areaSelected);
     setValues({
       name: editableHotel.name,
       address: editableHotel.address,
@@ -53,53 +54,34 @@ export default function HotelForm() {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    console.log('body 1', body);
 
-    let hostel;
+    let status;
     try {
       if (type === 'edit') {
-        console.log('body', body);
         const editableHotel = state.hostels.find(
-          (hostel: any) => hostel.id === state.idToEdit
+          (hostel: HotelFromDB) => hostel.id === state.idToEdit
         );
-
-        console.log('editableHotel?.sectorId', editableHotel?.sectorId);
-        console.log('editableHotel', editableHotel);
 
         const newbody = {
           ...body,
           sectorId: +editableHotel?.sectorId
         };
-
-        hostel = await fetch(
-          `http://localhost:5000/api/hotel/${state.idToEdit}`,
-          {
-            method: 'PUT',
-            body: JSON.stringify(newbody),
-            headers: {
-              'content-type': 'application/json'
-            }
-          }
-        );
+        status = await crud.handleUpdate('hotel', state.idToEdit, newbody);
       }
 
       if (type === 'post') {
-        hostel = await fetch('http://localhost:5000/api/hotel', {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
+        status = await crud.handlePost('hotel', body);
       }
 
-      console.log('[hostel]', hostel);
-
-      await setIdToEdit(dispatch, '');
-      await setValues(INIATIAL_STATE);
-      await refreshApp(dispatch, true);
-      await message.success("L'opération à bien été réalisé");
-      await toggleModal(dispatch, false);
+      if (status === 200) {
+        await setIdToEdit(dispatch, '');
+        await setValues(INITIAL_STATE);
+        await refreshApp(dispatch, true);
+        await toggleModal(dispatch, false);
+        await message.success("L'opération à bien été réalisé");
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       await message.error("Une erreur s'est produite mlors de cette opération");
     }
@@ -172,7 +154,9 @@ export default function HotelForm() {
         </label>
       </fieldset>
       {!state.idToEdit && <SelectArea />}
-      <Button htmlType="submit">Ajouter</Button>
+      <Button htmlType="submit">
+        {state.idToEdit ? 'Modifier' : 'Ajouter'}
+      </Button>
     </form>
   );
 }

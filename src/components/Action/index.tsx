@@ -9,6 +9,7 @@ import {
   setIdDetailToShow
 } from 'action/mainAction';
 import { MainStore } from 'store/MainStore';
+import crud from 'utils/crud';
 
 interface Props {
   wording: string;
@@ -22,16 +23,21 @@ export default function Action(props: Props) {
   const { dispatch } = useContext(MainStore);
 
   const handleDelete = async (id: string | number) => {
-    const deletedhotel = await fetch(
-      `http://localhost:5000/api/${props.endpoint}/${props.record.key}`,
-      {
-        method: 'DELETE'
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const status = await crud.handleDelete(props.endpoint!, id);
+
+    try {
+      if (status === 200) {
+        await refreshApp(dispatch, true);
+        await message.success('Supprimé avec Succès');
+      } else {
+        throw new Error();
       }
-    );
-    console.log(deletedhotel);
-    await refreshApp(dispatch, true);
-    await message.success('Supprimé avec Succès');
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <div>
       <Icon
@@ -43,7 +49,7 @@ export default function Action(props: Props) {
         style={{ marginRight: '10%', fontSize: '18px' }}
       />
       <Popconfirm
-        title={props.wording} //"Êtes-vous sur de vouloir supprimer ce véhicule ?"
+        title={props.wording}
         onConfirm={() => {
           handleDelete(props.record.key);
         }}
@@ -61,7 +67,7 @@ export default function Action(props: Props) {
             fontWeight: 600,
             cursor: 'pointer'
           }}
-          onClick={() => setIdDetailToShow(dispatch, props.record.key)}
+          onClick={() => setIdDetailToShow(dispatch, props.record?.key)}
         >
           Voir détail
         </p>

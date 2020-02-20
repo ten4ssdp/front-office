@@ -9,9 +9,7 @@ import './calendar.scss';
 const MyCalendar = () => {
   const start = new Date();
   const end = new Date(new Date().setHours(start.getHours() + 1));
-  console.log(
-    new Date(new Date().setHours(start.getHours() + 3)).toISOString()
-  );
+
   return (
     <div className="calendar">
       <Calendar
@@ -70,10 +68,10 @@ const MyCalendar = () => {
             color: 'white',
             category: 'time',
             start: new Date(
-              new Date().setHours(start.getHours() + 3)
+              new Date('02/25/2020').setHours(start.getHours() + 3)
             ).toISOString(),
             end: new Date(
-              new Date().setHours(start.getHours() + 4)
+              new Date('02/25/2020').setHours(start.getHours() + 4)
             ).toISOString()
           },
           {

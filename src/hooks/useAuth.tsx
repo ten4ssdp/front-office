@@ -4,7 +4,7 @@ import useForm from './useForm';
 import { UserStore } from '../store/UserStore';
 import { SIGNIN_USER, SIGNUP_USER, SIGNOUT_USER } from '../constant/user';
 
-function useAuth(initialState: UserState, isLogin: boolean) {
+function useAuth(initialState: any, isLogin: boolean) {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [values, handleChange] = useForm(initialState);
   const { dispatch } = useContext(UserStore);
@@ -34,7 +34,6 @@ function useAuth(initialState: UserState, isLogin: boolean) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(values);
     setIsSubmit(true);
   };
 
