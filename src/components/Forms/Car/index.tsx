@@ -4,6 +4,7 @@ import useForm from 'hooks/useForm';
 import { MainStore } from 'store/MainStore';
 import { setIdToEdit, refreshApp, toggleModal } from 'action/mainAction';
 import { CarFromDB } from 'interface/car';
+import crud from 'utils/crud';
 
 const INITIAL_STATE = {
   carId: '',
@@ -40,37 +41,25 @@ export default function CarForm() {
   ) => {
     e.preventDefault();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let car;
+    let status;
     try {
       if (type === 'edit') {
-        car = await fetch(
-          `http://localhost:5000/api/vehicle/${state.idToEdit}`,
-          {
-            method: 'PUT',
-            body: JSON.stringify(body),
-            headers: {
-              'content-type': 'application/json'
-            }
-          }
-        );
+        status = await crud.handleUpdate('vehicle', state.idToEdit, body);
       }
 
       if (type === 'post') {
-        car = await fetch('http://localhost:5000/api/vehicle', {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
+        crud.handlePost('vehicle', body);
       }
 
-      await setIdToEdit(dispatch, '');
-      await setValues(INITIAL_STATE);
-      await refreshApp(dispatch, true);
-      await toggleModal(dispatch, false);
-      await message.success("L'opération à bien été réalisé");
+      if (status === 200) {
+        await setIdToEdit(dispatch, '');
+        await setValues(INITIAL_STATE);
+        await refreshApp(dispatch, true);
+        await toggleModal(dispatch, false);
+        await message.success("L'opération à bien été réalisé");
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       await message.error("Une erreur s'est produite mlors de cette opération");
     }

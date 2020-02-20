@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import Detail from '..';
 import { Row, Divider, Button, Popconfirm, message } from 'antd';
+
+import Detail from '..';
 import {
   setIdToEdit,
   toggleModal,
@@ -8,8 +9,8 @@ import {
   refreshApp
 } from 'action/mainAction';
 import { MainStore } from 'store/MainStore';
-import onDelete from 'utils/handleDelete';
 import { CarFromDB } from 'interface/car';
+import crud from 'utils/crud';
 
 interface Props {
   car: CarFromDB;
@@ -18,10 +19,18 @@ interface Props {
 export default function DetailCar(props: Props) {
   const { dispatch } = useContext(MainStore);
   const handleDelete = async () => {
-    await onDelete('vehicle', props.car?.id);
-    await setIdDetailToShow(dispatch, '');
-    await refreshApp(dispatch, true);
-    await message.success('Supprimé avec succès');
+    const status = await crud.handleDelete('vehicle', props.car?.id);
+    try {
+      if (status === 200) {
+        await setIdDetailToShow(dispatch, '');
+        await refreshApp(dispatch, true);
+        await message.success('Supprimé avec succès');
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Detail>

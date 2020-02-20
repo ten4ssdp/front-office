@@ -9,6 +9,7 @@ import {
   setIdDetailToShow
 } from 'action/mainAction';
 import { MainStore } from 'store/MainStore';
+import crud from 'utils/crud';
 
 interface Props {
   wording: string;
@@ -22,15 +23,19 @@ export default function Action(props: Props) {
   const { dispatch } = useContext(MainStore);
 
   const handleDelete = async (id: string | number) => {
-    const deletedhotel = await fetch(
-      `http://localhost:5000/api/${props.endpoint}/${id}`,
-      {
-        method: 'DELETE'
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const status = await crud.handleDelete(props.endpoint!, id);
+
+    try {
+      if (status === 200) {
+        await refreshApp(dispatch, true);
+        await message.success('Supprimé avec Succès');
+      } else {
+        throw new Error();
       }
-    );
-    await refreshApp(dispatch, true);
-    await message.success('Supprimé avec Succès');
-    return deletedhotel;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

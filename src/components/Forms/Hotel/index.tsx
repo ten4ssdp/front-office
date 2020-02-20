@@ -8,6 +8,7 @@ import { toggleModal } from '../../../action/mainAction';
 import { message } from 'antd';
 import SelectArea from 'components/SelectArea';
 import { HotelFromDB } from 'interface/hotel';
+import crud from 'utils/crud';
 
 const INITIAL_STATE = {
   name: '',
@@ -54,8 +55,7 @@ export default function HotelForm() {
   ) => {
     e.preventDefault();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let hostel;
+    let status;
     try {
       if (type === 'edit') {
         const editableHotel = state.hostels.find(
@@ -66,34 +66,22 @@ export default function HotelForm() {
           ...body,
           sectorId: +editableHotel?.sectorId
         };
-
-        hostel = await fetch(
-          `http://localhost:5000/api/hotel/${state.idToEdit}`,
-          {
-            method: 'PUT',
-            body: JSON.stringify(newbody),
-            headers: {
-              'content-type': 'application/json'
-            }
-          }
-        );
+        status = await crud.handleUpdate('hotel', state.idToEdit, newbody);
       }
 
       if (type === 'post') {
-        hostel = await fetch('http://localhost:5000/api/hotel', {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
+        status = await crud.handlePost('hotel', body);
       }
 
-      await setIdToEdit(dispatch, '');
-      await setValues(INITIAL_STATE);
-      await refreshApp(dispatch, true);
-      await toggleModal(dispatch, false);
-      await message.success("L'opération à bien été réalisé");
+      if (status === 200) {
+        await setIdToEdit(dispatch, '');
+        await setValues(INITIAL_STATE);
+        await refreshApp(dispatch, true);
+        await toggleModal(dispatch, false);
+        await message.success("L'opération à bien été réalisé");
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       await message.error("Une erreur s'est produite mlors de cette opération");
     }

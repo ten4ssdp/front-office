@@ -11,9 +11,9 @@ import {
 } from 'action/mainAction';
 
 import { HotelFromDB, LastestHotelVisits } from 'interface/hotel';
-import onDelete from '../../../utils/handleDelete';
 
 import '../detail.scss';
+import crud from 'utils/crud';
 interface Props {
   hotel: HotelFromDB;
 }
@@ -21,10 +21,18 @@ interface Props {
 export default function DetailHotel(props: Props) {
   const { dispatch } = useContext(MainStore);
   const handleDelete = async () => {
-    await onDelete('hotel', props.hotel?.id);
-    await setIdDetailToShow(dispatch, '');
-    await refreshApp(dispatch, true);
-    await message.success('Supprimé avec succès');
+    const status = await crud.handleDelete('hotel', props.hotel?.id);
+    try {
+      if (status === 200) {
+        await setIdDetailToShow(dispatch, '');
+        await refreshApp(dispatch, true);
+        await message.success('Supprimé avec succès');
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <Detail>
