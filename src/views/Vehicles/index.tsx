@@ -62,9 +62,7 @@ function Vehicles(): JSX.Element {
 
   const { dispatch, state } = useContext(MainStore);
 
-  const { isloading, error, datas } = useFetch(
-    'http://localhost:5000/api/vehicles'
-  );
+  const { isloading, datas } = useFetch('http://localhost:5000/api/vehicles');
 
   useEffect(() => {
     !isloading && setCarsDatasToStore(dispatch, datas);

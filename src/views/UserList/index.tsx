@@ -1,16 +1,12 @@
-import React, { useContext } from 'react';
-import { Button, PageHeader } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import { PageHeader } from 'antd';
 
 import List from 'components/List';
-import ModalForm from 'components/Modal/ModalForm';
 import { MainStore } from 'store/MainStore';
-import { toggleModal } from 'action/mainAction';
-import {
-  ColumnsInterface,
-  EffectifsDatasInterface
-} from 'interface/listInterface';
-import EffectifForm from 'components/Forms/Effectif';
-import Action from 'components/Action';
+import { setIdDetailToShow } from 'action/mainAction';
+import { ColumnsInterface } from 'interface/listInterface';
+import useFetch from 'hooks/useFetch';
+import DetailUser from 'components/Detail/DetailUser';
 
 const columns: ColumnsInterface[] = [
   {
@@ -26,45 +22,63 @@ const columns: ColumnsInterface[] = [
     dataIndex: 'area'
   },
   {
+    title: 'Role',
+    dataIndex: 'role'
+  },
+  {
     title: 'Action',
     dataIndex: '',
     key: 'x',
     // eslint-disable-next-line react/display-name
-    render: () => (
-      <Action wording="Êtes-vous sur de vouloir supprimer cet intervenant ?" />
+    render: (text, record) => (
+      <p
+        style={{
+          color: '#006BB4',
+          marginTop: '10%',
+          fontWeight: 600,
+          cursor: 'pointer'
+        }}
+        onClick={() => setIdDetailToShow(record.dispatch, record?.key)}
+      >
+        Voir détail
+      </p>
     )
   }
 ];
 
-const data: EffectifsDatasInterface[] = [];
-for (let i = 0; i < 20; i++) {
-  data.push({
-    key: i,
-    lastname: 'Doe',
-    firstname: `John-${i}`,
-    area: '75'
-  });
-}
-
 function UserList(): JSX.Element {
-  const { dispatch } = useContext(MainStore);
+  const [users, setUsers] = useState<any | []>([]);
+  const [user, setUser] = useState<any>(null);
+  const { dispatch, state } = useContext(MainStore);
+
+  const { datas, isloading }: any = useFetch('http://localhost:5000/api/user');
+
+  useEffect(() => {
+    const arr = datas?.map((d: any) => ({
+      key: d?.id,
+      lastname: d?.lastname,
+      firstname: d?.name,
+      area: d?.sector?.name,
+      role: d?.role?.name,
+      dispatch
+    }));
+    setUsers(arr);
+  }, [isloading]);
+
+  useEffect(() => {
+    const employee = datas?.find((d: any) => d.id === state.idDetailToShow);
+    setUser(employee);
+  }, [state.idDetailToShow]);
 
   return (
     <div className="UserList">
       <PageHeader
         title="Liste des intervenants"
         subTitle="Île de France"
-        footer={[
-          <Button key="1" onClick={() => toggleModal(dispatch, true)}>
-            Ajouter un intenvant
-          </Button>
-        ]}
         style={{ paddingTop: '5%', paddingBottom: '5%' }}
       />
-      <List columns={columns} data={data} />
-      <ModalForm title="Ajouter un intervenant">
-        <EffectifForm />
-      </ModalForm>
+      <List columns={columns} data={users} />
+      {user && <DetailUser user={user} />}
     </div>
   );
 }

@@ -10,15 +10,12 @@ import {
   refreshApp
 } from 'action/mainAction';
 
-import { HotelFromDB, LastestHotelVisits } from 'interface/hotel';
+import { LastestHotelVisits } from 'interface/hotel';
 
 import '../detail.scss';
 import crud from 'utils/crud';
-interface Props {
-  hotel: HotelFromDB;
-}
 
-export default function DetailHotel(props: Props) {
+export default function DetailHotel(props: any) {
   const { dispatch } = useContext(MainStore);
   const handleDelete = async () => {
     const status = await crud.handleDelete('hotel', props.hotel?.id);

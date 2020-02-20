@@ -13,6 +13,9 @@ const initialState: MainState = {
   idDetailToShow: '',
   hostels: [],
   cars: [],
+  visits: [],
+  teamsAndSector: [],
+  teamId: '',
   idToEdit: '',
   refresh: false
 };

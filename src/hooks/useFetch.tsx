@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { MainStore } from 'store/MainStore';
 import { refreshApp } from 'action/mainAction';
+import Cookies from 'js-cookie';
 
 export default (url: string) => {
   const [datas, setDatas] = useState([]);
@@ -13,7 +14,11 @@ export default (url: string) => {
       setIsLoading(true);
 
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: {
+            authorization: `bearer: ${Cookies.get('token')}`
+          }
+        });
         const resJson = await res.json();
         setDatas(resJson);
         setIsLoading(false);

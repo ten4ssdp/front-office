@@ -1,33 +1,21 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 
 import { Input, Button } from 'antd';
-import useAuth from '../../../hooks/useAuth';
-import { UserState } from '../../../interface/userInterface';
-import { UserStore } from '../../../store/UserStore';
+import useAuth from 'hooks/useAuth';
 
 import './auth-form.scss';
 
-const INITIAL_STATE: UserState = {
-  firstname: '',
-  lastname: '',
+const INITIAL_STATE = {
   email: '',
   password: ''
 };
 
 export default function AuthForm(): JSX.Element {
-  const { userState } = useContext(UserStore);
-  const history = useHistory();
+  const { values, handleChange, handleSubmit } = useAuth(INITIAL_STATE, true);
 
-  const { values, handleChange, handleSubmit } = useAuth(
-    INITIAL_STATE,
-    userState.isLogin
-  );
-
-  const submit = (path: string, e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (path: string, e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSubmit(e);
-    history.push(path);
+    await handleSubmit(e);
   };
 
   return (

@@ -7,7 +7,10 @@ import {
   FETCH_CAR,
   SET_ID_TO_EDIT,
   CAN_REFRESH,
-  ID_TO_SHOW
+  ID_TO_SHOW,
+  SET_VISIT_TO_STORE,
+  SET_TEAM_ID_TO_STORE,
+  SET_SECTOR_AND_TEAM_TO_STORE
 } from 'constant/mainStore';
 function mainReducer(
   state: MainState,
@@ -30,6 +33,12 @@ function mainReducer(
       return { ...state, refresh: action.payload };
     case ID_TO_SHOW:
       return { ...state, idDetailToShow: action.payload };
+    case SET_VISIT_TO_STORE:
+      return { ...state, visits: action.payload };
+    case SET_TEAM_ID_TO_STORE:
+      return { ...state, teamId: action.payload };
+    case SET_SECTOR_AND_TEAM_TO_STORE:
+      return { ...state, teamsAndSector: action.payload };
     default:
       return state;
   }

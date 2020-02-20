@@ -29,7 +29,7 @@ export default function DetailCar(props: Props) {
         throw new Error();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   return (

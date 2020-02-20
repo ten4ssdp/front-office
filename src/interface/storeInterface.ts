@@ -11,6 +11,9 @@ export interface MainState {
   idDetailToShow: string | number;
   hostels: HotelFromDB[];
   cars: [];
+  visits: [];
+  teamId: '';
   idToEdit: string | number;
   refresh: boolean;
+  teamsAndSector: any | null;
 }

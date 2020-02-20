@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 
 // import { MainStore } from '../../store/MainStore';
@@ -10,13 +10,20 @@ import HomeRoot from './Home';
 import Hostels from '../Hostels';
 import Vehicles from '../Vehicles';
 import UserList from '../UserList';
+import Cookies from 'js-cookie';
+import { getCurrentUser } from 'action/userAction';
+import { UserStore } from 'store/UserStore';
 
 function Home(): JSX.Element {
-  // const { state } = React.useContext(MainStore);
-  React.useEffect(() => {
+  const { dispatch } = React.useContext(UserStore);
+  useEffect(() => {
     if (isElectron()) {
       alert('hello world');
     }
+  }, []);
+
+  useEffect(() => {
+    getCurrentUser(dispatch, Cookies.get('token') as string);
   }, []);
 
   return (

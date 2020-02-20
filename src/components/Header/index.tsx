@@ -1,4 +1,6 @@
 import React from 'react';
+import Cookies from 'js-cookie';
+
 import { NavLink, useHistory } from 'react-router-dom';
 import Button from 'antd/lib/button';
 
@@ -39,7 +41,10 @@ function Header(): JSX.Element {
 
       <Button
         type="primary"
-        onClick={() => history.push('/auth')}
+        onClick={() => {
+          Cookies.remove('token');
+          history.push('/auth');
+        }}
         icon="logout"
         htmlType="button"
         className="Header-button"

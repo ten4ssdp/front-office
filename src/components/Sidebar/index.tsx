@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import { Avatar } from 'antd';
 
-import { UserStore } from '../../store/UserStore';
-
-import './sidebar.scss';
+import { UserStore } from 'store/UserStore';
 import SelectTeam from 'components/SelectTeam';
 
+import './sidebar.scss';
+
 function Sidebar(): JSX.Element {
-  const { userState } = useContext(UserStore);
+  const {
+    userState: { currentUser }
+  } = useContext(UserStore);
   return (
     <div className="sidebar">
       <div className="sidebar-logo">
@@ -18,15 +20,14 @@ function Sidebar(): JSX.Element {
       </div>
       <div className="sidebar-container">
         <Avatar
-          className="sidebar-img"
-          alt="Remy Sharp"
-          src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fthecharlestonphotographer.com%2Fwp-content%2Fuploads%2F2015%2F02%2Fprofessional-business-portrait-photography-by-charleston-headshot-photographers-king-street-studios-21.jpg&f=1&nofb=1"
-        />
-        {
-          <p>
-            {userState.firstname} {userState.lastname}
-          </p>
-        }
+          size={100}
+          style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+        >
+          {currentUser?.name[0]} {currentUser?.lastname[0]}
+        </Avatar>
+        <p>
+          {currentUser?.name} {currentUser?.lastname}
+        </p>
         <SelectTeam />
       </div>
     </div>

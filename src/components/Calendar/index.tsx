@@ -1,18 +1,55 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Calendar from '@toast-ui/react-calendar';
 import 'tui-calendar/dist/tui-calendar.css';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
 import 'tui-calendar/dist/tui-calendar.css';
 import './calendar.scss';
+import { MainStore } from 'store/MainStore';
+import { Button, Icon } from 'antd';
+import { Visit } from 'interface/hotel';
 
 const MyCalendar = () => {
-  const start = new Date();
-  const end = new Date(new Date().setHours(start.getHours() + 1));
+  const [visits, setVisits] = useState([]);
+  const { state } = useContext(MainStore);
+  const calendarRef = React.useRef<any>(null);
+
+  const handleClickNextButton = () => {
+    const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
+    calendarInstance.next();
+  };
+  const handleClickPrevButton = () => {
+    const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
+    calendarInstance.prev();
+  };
+
+  useEffect(() => {
+    if (state?.visits?.length) {
+      const vi = state.visits.map((v: Visit) => ({
+        calendarId: '1',
+        title: v?.hotel?.name,
+        category: 'time',
+        start: v?.start,
+        end: v?.end,
+        location: `${v?.hotel?.address} ${v?.hotel?.zipCode} ${v?.hotel?.city}`,
+        isReadOnly: true
+      }));
+      setVisits(vi);
+    }
+  }, [state?.visits?.length, state.teamId]);
 
   return (
     <div className="calendar">
+      <div>
+        <Button htmlType="button" onClick={() => handleClickPrevButton()}>
+          <Icon type="left" />
+        </Button>
+        <Button htmlType="button" onClick={() => handleClickNextButton()}>
+          <Icon type="right" />
+        </Button>
+      </div>
       <Calendar
+        ref={calendarRef}
         taskView={false}
         height="50%"
         week={{
@@ -48,63 +85,7 @@ const MyCalendar = () => {
         disableClick={false}
         view="week"
         isReadOnly={false}
-        schedules={[
-          {
-            id: '1',
-            calendarId: '1',
-            title: 'Visite Maximus',
-            category: 'time',
-            dueDateClass: '',
-            color: 'white',
-            start: start.toISOString(),
-            end,
-            location: 'paris'
-          },
-          {
-            id: '2',
-            calendarId: '1',
-            title: 'Practice',
-            dueDateClass: '',
-            color: 'white',
-            category: 'time',
-            start: new Date(
-              new Date('02/25/2020').setHours(start.getHours() + 3)
-            ).toISOString(),
-            end: new Date(
-              new Date('02/25/2020').setHours(start.getHours() + 4)
-            ).toISOString()
-          },
-          {
-            id: '3',
-            calendarId: '1',
-            title: 'FE Workshop',
-            dueDateClass: '',
-            category: 'time',
-            start: new Date(
-              new Date().setHours(start.getHours() + 6)
-            ).toISOString(),
-            end: new Date(new Date().setHours(start.getHours() + 8)),
-            isReadOnly: true
-          },
-          {
-            id: '4',
-            calendarId: '1',
-            title: 'FE Workshop',
-            dueDateClass: '',
-            category: 'time',
-            start: new Date(
-              new Date(start.setHours(start.getHours())).setDate(
-                start.getDate() + 1
-              )
-            ).toISOString(),
-            end: new Date(
-              new Date(start.setHours(start.getHours() + 4)).setDate(
-                start.getDate() + 1
-              )
-            ).toISOString(),
-            isReadOnly: true
-          }
-        ]}
+        schedules={visits}
         timezones={[
           {
             timezoneOffset: -60,

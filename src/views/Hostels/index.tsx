@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, PageHeader } from 'antd';
 
@@ -14,7 +15,7 @@ import Action from 'components/Action';
 import useFetch from 'hooks/useFetch';
 import moment from 'moment';
 import DetailHotel from 'components/Detail/DetailHotel';
-import { HotelFromDB } from 'interface/hotel';
+import { HotelFromDB, SectorFromDB } from 'interface/hotel';
 
 const columns: ColumnsInterface[] = [
   {
@@ -58,19 +59,22 @@ function Hostels(): JSX.Element {
   const { dispatch, state } = useContext(MainStore);
 
   const { isloading, datas } = useFetch('http://localhost:5000/api/hotels');
+  const { datas: sectors } = useFetch('http://localhost:5000/api/sectors');
+
   useEffect(() => {
-    !isloading && setHostelsDatasToStore(dispatch, datas);
-    const arr: HotelsDatasInterface[] = datas.map((d: HotelFromDB) => ({
+    if ((!isloading && state.hostels.length <= 0) || state.refresh)
+      setHostelsDatasToStore(dispatch, datas);
+    const arr: HotelsDatasInterface[] = state.hostels.map((d: HotelFromDB) => ({
       key: d.id,
       hotel: d.name,
       area: d?.sector?.name,
       visite: d?.visits?.[0]?.date
         ? moment(d?.visits[0]?.date).format('DD/MM/YYYY')
-        : 'Pas de Date',
-      rate: d?.visits?.[0]?.rate ? d?.visits?.[0]?.rate : 'Pas de note'
+        : 'N/A',
+      rate: d?.visits?.[0]?.rate ? d?.visits?.[0]?.rate : 'N/A'
     }));
     setHotelsData(arr);
-  }, [isloading]);
+  }, [isloading, state.hostels.length, state.refresh]);
 
   useEffect(() => {
     const hotel = state.hostels.find(
@@ -84,6 +88,22 @@ function Hostels(): JSX.Element {
       <PageHeader
         title="Liste des hôtels"
         subTitle="Île de France"
+        extra={[
+          <Button
+            key={0}
+            onClick={() => setHostelsDatasToStore(dispatch, datas)}
+          >
+            Tout les hôtels
+          </Button>,
+          sectors.map((s: SectorFromDB) => (
+            <Button
+              key={s.id}
+              onClick={() => setHostelsDatasToStore(dispatch, s.hotels)}
+            >
+              {s.name}
+            </Button>
+          ))
+        ]}
         footer={[
           <Button key="1" onClick={() => toggleModal(dispatch, true)}>
             Ajouter un hôtel
