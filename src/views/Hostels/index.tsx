@@ -61,10 +61,8 @@ function Hostels(): JSX.Element {
   const { isloading, datas } = useFetch('http://localhost:5000/api/hotels');
   const { datas: sectors } = useFetch('http://localhost:5000/api/sectors');
 
-  console.log(sectors);
   useEffect(() => {
-    !isloading &&
-      state.hostels.length <= 0 &&
+    if ((!isloading && state.hostels.length <= 0) || state.refresh)
       setHostelsDatasToStore(dispatch, datas);
     const arr: HotelsDatasInterface[] = state.hostels.map((d: HotelFromDB) => ({
       key: d.id,
@@ -72,11 +70,11 @@ function Hostels(): JSX.Element {
       area: d?.sector?.name,
       visite: d?.visits?.[0]?.date
         ? moment(d?.visits[0]?.date).format('DD/MM/YYYY')
-        : 'Pas de Date',
-      rate: d?.visits?.[0]?.rate ? d?.visits?.[0]?.rate : 'Pas de note'
+        : 'N/A',
+      rate: d?.visits?.[0]?.rate ? d?.visits?.[0]?.rate : 'N/A'
     }));
     setHotelsData(arr);
-  }, [isloading, state.hostels.length]);
+  }, [isloading, state.hostels.length, state.refresh]);
 
   useEffect(() => {
     const hotel = state.hostels.find(
