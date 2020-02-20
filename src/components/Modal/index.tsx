@@ -6,7 +6,7 @@ import { toggleModal, setIdToEdit } from 'action/mainAction';
 interface Props {
   title: string;
   children: JSX.Element;
-  fn: () => void;
+  fn?: () => void;
 }
 
 export default function ModalContainer(props: Props) {

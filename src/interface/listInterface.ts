@@ -1,4 +1,4 @@
-import { ReactText } from 'react';
+import { ReactText, Dispatch } from 'react';
 
 export interface ColumnsInterface {
   title: string;
@@ -20,6 +20,8 @@ export type EffectifsDatasInterface = {
   firstname: string;
   lastname: string;
   area: string;
+  role: string;
+  dispatch: Dispatch<{ type: string; payload: any }>;
 };
 
 export type CarsDatasInterface = {

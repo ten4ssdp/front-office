@@ -5,14 +5,26 @@ import Overview from '..';
 import { MainStore } from 'store/MainStore';
 
 export default function PlanningOVerview() {
-  const { dispatch } = useContext(MainStore);
+  const { state } = useContext(MainStore);
+
+  const team = state.teamsAndSector.find((t: any) => t.id === state.teamId);
 
   return (
     <Overview>
-      <h3>Binone {'personne 1/ personne 2'}</h3>
-      <p>Secteur {'92/94'}</p>
-      <Tag>personne 1</Tag>
-      <Tag>personne 2</Tag>
+      {state.teamId ? (
+        <>
+          <h3>Binone {team?.name}</h3>
+          <p>Secteur {team?.sector?.name}</p>
+          <Tag>
+            {team?.users?.[0]?.lastname} {team?.users?.[0]?.name}
+          </Tag>
+          <Tag>
+            {team?.users?.[1]?.lastname} {team?.users?.[1]?.name}
+          </Tag>
+        </>
+      ) : (
+        <h1>Selectionner une équipe </h1>
+      )}
     </Overview>
   );
 }

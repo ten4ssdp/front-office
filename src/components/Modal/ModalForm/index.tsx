@@ -7,14 +7,5 @@ interface Props {
 }
 
 export default function ModalForm(props: Props) {
-  return (
-    <ModalContainer
-      fn={() => {
-        console.log('hi');
-      }}
-      title={props.title}
-    >
-      {props.children}
-    </ModalContainer>
-  );
+  return <ModalContainer title={props.title}>{props.children}</ModalContainer>;
 }

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserStore } from '../../store/UserStore';
+import cookie from 'js-cookie';
 
 interface RouteType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,20 +12,19 @@ interface RouteType {
 }
 
 const PrivateRoute = ({ component: Component, ...rest }: RouteType) => {
-  const { userState } = useContext(UserStore);
   return (
     <Route
       {...rest}
       render={props =>
-        userState.token !== null ? (
-          <Component {...props} />
-        ) : (
+        cookie.get('token') === null || cookie.get('token') === undefined ? (
           <Redirect
             to={{
               pathname: '/auth',
               state: { from: props.location }
             }}
           />
+        ) : (
+          <Component {...props} />
         )
       }
     />
