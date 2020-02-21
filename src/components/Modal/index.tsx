@@ -24,6 +24,7 @@ export default function ModalContainer(props: Props) {
         toggleModal(dispatch, false);
         setIdToEdit(dispatch, '');
       }}
+      footer={null}
     >
       {props.children}
     </Modal>

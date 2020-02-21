@@ -48,7 +48,7 @@ export default function CarForm() {
       }
 
       if (type === 'post') {
-        crud.handlePost('vehicle', body);
+        status = await crud.handlePost('vehicle', body);
       }
 
       if (status === 200) {

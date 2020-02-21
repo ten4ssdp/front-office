@@ -154,7 +154,7 @@ export default function HotelForm() {
         </label>
       </fieldset>
       {!state.idToEdit && <SelectArea />}
-      <Button htmlType="submit">
+      <Button htmlType="submit" style={{ display: 'block' }}>
         {state.idToEdit ? 'Modifier' : 'Ajouter'}
       </Button>
     </form>
