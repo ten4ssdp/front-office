@@ -9,6 +9,7 @@ import { MainStore } from 'store/MainStore';
 import moment from 'moment';
 import useFetch from 'hooks/useFetch';
 import Cookies from 'js-cookie';
+import { BASE_URL } from 'utils/constant';
 
 const { Option } = Select;
 
@@ -18,7 +19,7 @@ export default function SelectTeam() {
   const { dispatch } = useContext(MainStore);
 
   const { datas, isloading } = useFetch(
-    `http://localhost:5000/api/mickey/teams/${moment()
+    `${BASE_URL}/mickey/teams/${moment()
       .add(7, 'days')
       .format('MM-DD-YYYY')}`
   );
@@ -30,7 +31,7 @@ export default function SelectTeam() {
   useEffect(() => {
     async function getDatas() {
       const res = await fetch(
-        `http://localhost:5000/api/mickey/visits/${id}/${moment()
+        `${BASE_URL}/mickey/visits/${id}/${moment()
           .add(7, 'days')
           .format('MM-DD-YYYY')}`,
         {

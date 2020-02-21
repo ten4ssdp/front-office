@@ -16,6 +16,7 @@ import useFetch from 'hooks/useFetch';
 import moment from 'moment';
 import DetailHotel from 'components/Detail/DetailHotel';
 import { HotelFromDB, SectorFromDB } from 'interface/hotel';
+import { BASE_URL } from 'utils/constant';
 
 const columns: ColumnsInterface[] = [
   {
@@ -58,8 +59,8 @@ function Hostels(): JSX.Element {
 
   const { dispatch, state } = useContext(MainStore);
 
-  const { isloading, datas } = useFetch('http://localhost:5000/api/hotels');
-  const { datas: sectors } = useFetch('http://localhost:5000/api/sectors');
+  const { isloading, datas } = useFetch(`${BASE_URL}/hotels`);
+  const { datas: sectors } = useFetch(`${BASE_URL}/sectors`);
 
   useEffect(() => {
     if ((!isloading && state.hostels.length <= 0) || state.refresh)

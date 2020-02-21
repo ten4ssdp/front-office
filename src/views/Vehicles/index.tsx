@@ -11,6 +11,7 @@ import Action from 'components/Action';
 import useFetch from 'hooks/useFetch';
 import DetailCar from 'components/Detail/DetailCar';
 import { CarFromDB } from 'interface/car';
+import { BASE_URL } from 'utils/constant';
 
 const columns: ColumnsInterface[] = [
   {
@@ -62,7 +63,7 @@ function Vehicles(): JSX.Element {
 
   const { dispatch, state } = useContext(MainStore);
 
-  const { isloading, datas } = useFetch('http://localhost:5000/api/vehicles');
+  const { isloading, datas } = useFetch(`${BASE_URL}/vehicles`);
 
   useEffect(() => {
     !isloading && setCarsDatasToStore(dispatch, datas);

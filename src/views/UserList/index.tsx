@@ -7,6 +7,7 @@ import { setIdDetailToShow } from 'action/mainAction';
 import { ColumnsInterface } from 'interface/listInterface';
 import useFetch from 'hooks/useFetch';
 import DetailUser from 'components/Detail/DetailUser';
+import { BASE_URL } from 'utils/constant';
 
 const columns: ColumnsInterface[] = [
   {
@@ -51,7 +52,7 @@ function UserList(): JSX.Element {
   const [user, setUser] = useState<any>(null);
   const { dispatch, state } = useContext(MainStore);
 
-  const { datas, isloading }: any = useFetch('http://localhost:5000/api/user');
+  const { datas, isloading }: any = useFetch(`${BASE_URL}/user`);
 
   useEffect(() => {
     const arr = datas?.map((d: any) => ({

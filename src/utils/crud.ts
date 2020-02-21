@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { BASE_URL } from './constant';
 
 class Crud {
   private BASE_URL: string;
@@ -59,4 +60,4 @@ class Crud {
   }
 }
 
-export default new Crud('http://localhost:5000/api');
+export default new Crud(BASE_URL);
