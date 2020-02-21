@@ -8,6 +8,14 @@
 
 This projet is a planning maker app make with React and TypeScript boostraped by create-react-app
 
+### Production
+
+[Here is the production link](http://15.188.3.249/)  
+And here are some credentials to connect to the front office :  
+
+- username: eric.salarie-1@ssdp.net
+- password: 1234
+
 ### Technologies
 
 - React
