@@ -9,3 +9,14 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+.fielset {
+  margin-bottom: 3%;
+  > span {
+    margin-top: 3%;
+  }
+}
+
+.tui-full-calendar-time-schedule-content.tui-full-calendar-time-schedule-content-time {
+  color: white !important;
+}

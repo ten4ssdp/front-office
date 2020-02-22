@@ -1,10 +1,21 @@
-import { IS_LOGIN_USER } from '../constant/user';
-import { UserState } from '../interface/userInterface';
+import { GET_CURRENT_USER } from '../constant/user';
+import jwtDecode from 'jwt-decode';
+import Cookies from 'js-cookie';
+import { Dispatch } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const toogleAuth = (state: UserState, dispatch: any): void => {
+export const getCurrentUser = (
+  dispatch: Dispatch<{ type: string; payload: any }>,
+  token: string
+) => {
+  let payload;
+  if (token) {
+    payload = jwtDecode(token);
+  } else {
+    Cookies.remove('token');
+    throw new Error('Something went wrong with the token');
+  }
   return dispatch({
-    type: IS_LOGIN_USER,
-    payload: !state.isLogin
+    type: GET_CURRENT_USER,
+    payload
   });
 };

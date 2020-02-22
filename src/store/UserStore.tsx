@@ -3,13 +3,7 @@ import { UserState } from '../interface/userInterface';
 import userReducer from '../reducer/UserReducer';
 
 const userInitialState: UserState = {
-  lastname: 'Boulard',
-  firstname: 'Brigitte',
-  email: '',
-  password: '',
-  address: '',
-  isLogin: true,
-  token: null
+  currentUser: null
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

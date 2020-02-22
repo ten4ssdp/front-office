@@ -1,11 +1,11 @@
 import React from 'react';
 import MyCalendar from '../../components/Calendar';
-import UserOverview from '../UserOverview/userOverview';
+import PlanningOVerview from '../../components/Overview/PlanningOverview';
 
 export default function HomeRoot() {
   return (
     <>
-      <UserOverview />
+      <PlanningOVerview />
       <MyCalendar />
     </>
   );

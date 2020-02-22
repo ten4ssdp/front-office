@@ -1,8 +1,20 @@
 # Front office for SSDP
 
+### Developers
+- OUAISH Reda
+- TRAVAILLEUR Lorick
+
 ### Description
 
 This projet is a planning maker app make with React and TypeScript boostraped by create-react-app
+
+### Production
+
+[Here is the production link](http://15.188.3.249/)  
+And here are some credentials to connect to the front office :  
+
+- username: eric.salarie-1@ssdp.net
+- password: 1234
 
 ### Technologies
 
@@ -10,23 +22,20 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 - TypeScript
 - Eslint (basic config)
 - Prettier
-- Jest
-- Enzyme
-- Cypress
-- Sass
-- UI library(not define yet)
+- Moment
+- Scss
+- Ant Design
+
+### State Management
+- React Context (with reducer) - redux-like
+
 
 ### How it works
 
 - ```git clone <REPOSITORY URL>```
 - cd to the folder and then `yarn` or `npm i` , it will install all the packages you need.
 - `yarn start` or `npm start` to start the project.
+- `yarn lint:fix` to run the linter
 
 ### Testing
 
-E2E / Integration test:
-
-- Run with ui -> ```npm run cypress ```
-  - Then select one test file to run or all of them.
-
-- Without ui ->  ```npm run cypress:headless ```

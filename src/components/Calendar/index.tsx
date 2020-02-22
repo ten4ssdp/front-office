@@ -1,51 +1,91 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Calendar from '@toast-ui/react-calendar';
 import 'tui-calendar/dist/tui-calendar.css';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
 import 'tui-calendar/dist/tui-calendar.css';
 import './calendar.scss';
+import { MainStore } from 'store/MainStore';
+import { Button, Icon } from 'antd';
+import { Visit } from 'interface/hotel';
 
 const MyCalendar = () => {
-  const start = new Date();
-  const end = new Date(new Date().setHours(start.getHours() + 1));
+  const [visits, setVisits] = useState([]);
+  const { state } = useContext(MainStore);
+  const calendarRef = React.useRef<any>(null);
+
+  const handleClickNextButton = () => {
+    const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
+    calendarInstance.next();
+  };
+  const handleClickPrevButton = () => {
+    const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
+    calendarInstance.prev();
+  };
+
+  useEffect(() => {
+    if (state?.visits?.length) {
+      const vi = state.visits.map((v: Visit) => ({
+        calendarId: '1',
+        title: v?.hotel?.name,
+        category: 'time',
+        start: v?.start,
+        end: v?.end,
+        location: `${v?.hotel?.address} ${v?.hotel?.zipCode} ${v?.hotel?.city}`,
+        isReadOnly: true
+      }));
+      setVisits(vi);
+    }
+  }, [state?.visits?.length, state.teamId]);
+
   return (
     <div className="calendar">
+      <div>
+        <Button htmlType="button" onClick={() => handleClickPrevButton()}>
+          <Icon type="left" />
+        </Button>
+        <Button htmlType="button" onClick={() => handleClickNextButton()}>
+          <Icon type="right" />
+        </Button>
+      </div>
       <Calendar
+        ref={calendarRef}
+        taskView={false}
         height="50%"
         week={{
+          startDayOfWeek: 1,
           hourStart: 9,
-          hourEnd: 20
+          hourEnd: 20,
+          workweek: true,
+          daynames: [
+            'Dimanche',
+            'Lundi',
+            'Mardi',
+            'Mercredi',
+            'Jeudi',
+            'Vendredi',
+            'Samedi'
+          ]
         }}
         calendars={[
           {
             id: '0',
             name: 'Urgence',
-            bgColor: '#9e5fff',
-            borderColor: '#9e5fff'
+            bgColor: '#D50000',
+            borderColor: '#D50000'
           },
           {
             id: '1',
             name: 'Visite',
-            bgColor: '#00a9ff',
-            borderColor: '#00a9ff'
+            bgColor: '#2C98F0',
+            borderColor: '#2C98F0'
           }
         ]}
         disableDblClick={true}
         disableClick={false}
         view="week"
         isReadOnly={false}
-        schedules={[
-          {
-            id: '1',
-            calendarId: '0',
-            title: 'TOAST UI Calendar Study',
-            category: 'time',
-            dueDateClass: '',
-            start: start.toISOString(),
-            end: end
-          }
-        ]}
+        schedules={visits}
         timezones={[
           {
             timezoneOffset: -60,

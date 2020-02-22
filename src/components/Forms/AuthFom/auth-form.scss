@@ -1,0 +1,39 @@
+.auth-form {
+  height: 100%;
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__title {
+    font: {
+      size: 2em;
+      weight: 700;
+    }
+    padding-bottom: 50px;
+  }
+
+  &__form {
+    width: 55%;
+  }
+
+  &__input {
+    width: 100%;
+    margin-bottom: 20px;
+    .field-53 {
+      width: 100%;
+    }
+  }
+
+  &__btn {
+    background-color: #006bb4;
+    border-color: #006bb4;
+    color: white;
+
+    &:hover {
+      background-color: white;
+      color: #006bb4;
+    }
+  }
+}

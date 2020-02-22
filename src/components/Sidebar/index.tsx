@@ -1,0 +1,37 @@
+import React, { useContext } from 'react';
+import { Avatar } from 'antd';
+
+import { UserStore } from 'store/UserStore';
+import SelectTeam from 'components/SelectTeam';
+
+import './sidebar.scss';
+
+function Sidebar(): JSX.Element {
+  const {
+    userState: { currentUser }
+  } = useContext(UserStore);
+  return (
+    <div className="sidebar">
+      <div className="sidebar-logo">
+        <img
+          src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.ongconseil.com%2Fphp%2Fwp-content%2Fuploads%2F2017%2F01%2Fsamusocialparis.png&f=1&nofb=1"
+          alt="Samu Social Paris"
+        />
+      </div>
+      <div className="sidebar-container">
+        <Avatar
+          size={100}
+          style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+        >
+          {currentUser?.name[0]} {currentUser?.lastname[0]}
+        </Avatar>
+        <p>
+          {currentUser?.name} {currentUser?.lastname}
+        </p>
+        <SelectTeam />
+      </div>
+    </div>
+  );
+}
+
+export default Sidebar;

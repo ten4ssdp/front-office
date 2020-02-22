@@ -7,8 +7,9 @@ import {
   Redirect
 } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-// import PrivateRoute from './components/ProtectedRoute';
+import PrivateRoute from './components/ProtectedRoute';
 import './assets/styles/index.scss';
+import 'antd/dist/antd.css';
 
 import Home from './views/Home';
 import StoreProvider from './store/MainStore';
@@ -20,9 +21,9 @@ function Root(): JSX.Element {
     <Router>
       <Switch>
         <Route exact component={Auth} path="/auth" />
-        <Route exact component={Home} path="/home/:components" />
+        <PrivateRoute exact component={Home} path="/home/:components" />
         <Redirect from="/" to="/home/home" />
-        <Route exact component={Home} path="/home/home" />
+        <PrivateRoute exact component={Home} path="/home/home" />
       </Switch>
     </Router>
   );
