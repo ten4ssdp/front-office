@@ -10,7 +10,8 @@ import {
   ID_TO_SHOW,
   SET_VISIT_TO_STORE,
   SET_TEAM_ID_TO_STORE,
-  SET_SECTOR_AND_TEAM_TO_STORE
+  SET_SECTOR_AND_TEAM_TO_STORE,
+  SET_WEEK_FIRST_DAY
 } from 'constant/mainStore';
 function mainReducer(
   state: MainState,
@@ -39,6 +40,8 @@ function mainReducer(
       return { ...state, teamId: action.payload };
     case SET_SECTOR_AND_TEAM_TO_STORE:
       return { ...state, teamsAndSector: action.payload };
+    case SET_WEEK_FIRST_DAY:
+      return { ...state, selectedWeekFirstDay: action.payload };
     default:
       return state;
   }

@@ -8,20 +8,32 @@ import './calendar.scss';
 import { MainStore } from 'store/MainStore';
 import { Button, Icon } from 'antd';
 import { Visit } from 'interface/hotel';
+import { setWeekFirstDay } from 'action/mainAction';
+import moment from 'moment';
 
 const MyCalendar = () => {
   const [visits, setVisits] = useState([]);
-  const { state } = useContext(MainStore);
+  const { state, dispatch } = useContext(MainStore);
   const calendarRef = React.useRef<any>(null);
 
-  const handleClickNextButton = () => {
+  const handleClickButton = (navigationType: string) => {
     const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
-    calendarInstance.next();
+    calendarInstance[navigationType]();
+    const weekFirstDay = moment(calendarInstance?.getDateRangeStart().toDate())
+      .startOf('isoWeek')
+      .day(1)
+      .format('MM-DD-YYYY');
+    setWeekFirstDay(dispatch, weekFirstDay);
   };
-  const handleClickPrevButton = () => {
+
+  useEffect(() => {
     const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
-    calendarInstance.prev();
-  };
+    const weekFirstDay = moment(calendarInstance?.getDateRangeStart().toDate())
+      .startOf('isoWeek')
+      .day(1)
+      .format('MM-DD-YYYY');
+    setWeekFirstDay(dispatch, weekFirstDay);
+  }, []);
 
   useEffect(() => {
     if (state?.visits?.length) {
@@ -36,15 +48,14 @@ const MyCalendar = () => {
       }));
       setVisits(vi);
     }
-  }, [state?.visits?.length, state.teamId]);
-
+  }, [state?.visits, state.teamId]);
   return (
     <div className="calendar">
       <div>
-        <Button htmlType="button" onClick={() => handleClickPrevButton()}>
+        <Button htmlType="button" onClick={() => handleClickButton('prev')}>
           <Icon type="left" />
         </Button>
-        <Button htmlType="button" onClick={() => handleClickNextButton()}>
+        <Button htmlType="button" onClick={() => handleClickButton('next')}>
           <Icon type="right" />
         </Button>
       </div>

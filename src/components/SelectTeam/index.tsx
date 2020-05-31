@@ -6,7 +6,6 @@ import {
   setSectorAndTeam
 } from 'action/mainAction';
 import { MainStore } from 'store/MainStore';
-import moment from 'moment';
 import useFetch from 'hooks/useFetch';
 import Cookies from 'js-cookie';
 import { BASE_URL } from 'utils/constant';
@@ -16,13 +15,15 @@ const { Option } = Select;
 export default function SelectTeam() {
   const [id, setId] = useState('');
 
-  const { dispatch } = useContext(MainStore);
+  const { state, dispatch } = useContext(MainStore);
+  const { selectedWeekFirstDay } = state;
 
-  const { datas, isloading } = useFetch(
-    `${BASE_URL}/mickey/teams/${moment()
-      .add(7, 'days')
-      .format('MM-DD-YYYY')}`
-  );
+  const {
+    datas,
+    isloading
+  } = useFetch(`${BASE_URL}/mickey/teams/${selectedWeekFirstDay}`, [
+    selectedWeekFirstDay
+  ]);
 
   useEffect(() => {
     setSectorAndTeam(dispatch, datas);
@@ -31,9 +32,7 @@ export default function SelectTeam() {
   useEffect(() => {
     async function getDatas() {
       const res = await fetch(
-        `${BASE_URL}/mickey/visits/${id}/${moment()
-          .add(7, 'days')
-          .format('MM-DD-YYYY')}`,
+        `${BASE_URL}/mickey/visits/${id}/${selectedWeekFirstDay}`,
         {
           headers: {
             'content-type': 'application/json',
@@ -45,8 +44,8 @@ export default function SelectTeam() {
       const resJson = await res.json();
       setVisitToStore(dispatch, resJson);
     }
-    getDatas();
-  }, [id]);
+    !!id && getDatas();
+  }, [id, selectedWeekFirstDay]);
 
   function onChange(value: string) {
     setId(value);
