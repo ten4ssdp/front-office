@@ -13,7 +13,7 @@ export default function PlanningOVerview() {
     <Overview>
       {state.teamId ? (
         <>
-          <h3>Binone {team?.name}</h3>
+          <h3>Binome {team?.name}</h3>
           <p>Secteur {team?.sector?.name}</p>
           <Tag>
             {team?.users?.[0]?.lastname} {team?.users?.[0]?.name}

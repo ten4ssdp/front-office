@@ -17,6 +17,10 @@ const initialState: MainState = {
   teamsAndSector: [],
   teamId: '',
   idToEdit: '',
+  selectedWeekFirstDay: moment()
+    .startOf('isoWeek')
+    .day(1)
+    .format('MM-DD-YYYY'),
   refresh: false
 };
 
