@@ -11,7 +11,8 @@ import {
   SET_VISIT_TO_STORE,
   SET_TEAM_ID_TO_STORE,
   SET_SECTOR_AND_TEAM_TO_STORE,
-  SET_WEEK_FIRST_DAY
+  SET_WEEK_FIRST_DAY,
+  ADD_EMERGENCY
 } from 'constant/mainStore';
 function mainReducer(
   state: MainState,
@@ -36,6 +37,14 @@ function mainReducer(
       return { ...state, idDetailToShow: action.payload };
     case SET_VISIT_TO_STORE:
       return { ...state, visits: action.payload };
+    case ADD_EMERGENCY:
+      return {
+        ...state,
+        visits: {
+          visits: state.visits.visits,
+          emergencies: [...state.visits.emergencies, action.payload]
+        }
+      };
     case SET_TEAM_ID_TO_STORE:
       return { ...state, teamId: action.payload };
     case SET_SECTOR_AND_TEAM_TO_STORE:

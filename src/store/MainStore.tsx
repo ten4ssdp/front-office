@@ -13,7 +13,7 @@ const initialState: MainState = {
   idDetailToShow: '',
   hostels: [],
   cars: [],
-  visits: [],
+  visits: { visits: [], emergencies: [] },
   teamsAndSector: [],
   teamId: '',
   idToEdit: '',

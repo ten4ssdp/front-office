@@ -1,5 +1,6 @@
 import { HotelFromDB } from './hotel';
 import { Moment } from 'moment';
+import { StateVisits } from './visits';
 
 //TODO: change the any type
 export interface MainState {
@@ -11,7 +12,7 @@ export interface MainState {
   idDetailToShow: string | number;
   hostels: HotelFromDB[];
   cars: [];
-  visits: [];
+  visits: StateVisits;
   teamId: '';
   idToEdit: string | number;
   refresh: boolean;
