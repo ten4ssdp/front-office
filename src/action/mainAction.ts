@@ -10,7 +10,8 @@ import {
   SET_VISIT_TO_STORE,
   SET_TEAM_ID_TO_STORE,
   SET_SECTOR_AND_TEAM_TO_STORE,
-  SET_WEEK_FIRST_DAY
+  SET_WEEK_FIRST_DAY,
+  ADD_EMERGENCY
 } from '../constant/mainStore';
 import { HotelFromDB } from 'interface/hotel';
 import { Dispatch } from 'react';
@@ -131,6 +132,15 @@ export const setWeekFirstDay = (
 ) => {
   return dispatch({
     type: SET_WEEK_FIRST_DAY,
+    payload
+  });
+};
+export const addEmergency = (
+  dispatch: Dispatch<{ type: string; payload: any }>,
+  payload: any
+) => {
+  return dispatch({
+    type: ADD_EMERGENCY,
     payload
   });
 };

@@ -8,12 +8,17 @@ import './calendar.scss';
 import { MainStore } from 'store/MainStore';
 import { Button, Icon } from 'antd';
 import { Visit } from 'interface/hotel';
-import { setWeekFirstDay } from 'action/mainAction';
+import { setWeekFirstDay, addEmergency } from 'action/mainAction';
 import moment from 'moment';
+import socketIOClient from 'socket.io-client';
+import Cookies from 'js-cookie';
+import { API_URL } from 'utils/constant';
+import { UserStore } from 'store/UserStore';
 
 const MyCalendar = () => {
   const [visits, setVisits] = useState([]);
   const [emergencies, setEmergencies] = useState([]);
+  const [notifications, setNotifications] = useState<any>(null);
   const { state, dispatch } = useContext(MainStore);
   const calendarRef = React.useRef<any>(null);
 
@@ -34,7 +39,24 @@ const MyCalendar = () => {
       .day(1)
       .format('MM-DD-YYYY');
     setWeekFirstDay(dispatch, weekFirstDay);
+
+    Notification.requestPermission();
+    const token: string = Cookies.get('token') || '';
+    const socket = socketIOClient(API_URL);
+    socket.on('connect', () => {
+      socket.emit('join', token);
+      socket.on('emergency', function(data: any) {
+        new Notification('Nouvelle urgence', { body: data?.hotel?.name });
+        setNotifications(data);
+      });
+    });
   }, []);
+
+  useEffect(() => {
+    if (notifications !== null && state?.teamId === notifications?.teamId) {
+      notifications !== null && addEmergency(dispatch, notifications);
+    }
+  }, [notifications]);
 
   useEffect(() => {
     if (state?.visits?.visits?.length) {

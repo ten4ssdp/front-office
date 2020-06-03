@@ -15,6 +15,7 @@ import Cookies from 'js-cookie';
 import { getCurrentUser } from 'action/userAction';
 import { UserStore } from 'store/UserStore';
 import { API_URL } from 'utils/constant';
+import { addEmergency } from 'action/mainAction';
 
 function Home(): JSX.Element {
   const { dispatch } = React.useContext(UserStore);
@@ -25,18 +26,7 @@ function Home(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    const token: string = Cookies.get('token') || '';
     getCurrentUser(dispatch, Cookies.get('token') as string);
-    const socket = socketIOClient(API_URL);
-    socket.on('connect', () => {
-      socket.emit('join', token);
-      socket.on('messages', function(data: any) {
-        console.log(data);
-      });
-      socket.on('emergency', function(data: any) {
-        alert(JSON.stringify(data));
-      });
-    });
   }, []);
 
   return (
