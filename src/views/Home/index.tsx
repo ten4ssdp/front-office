@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import socketIOClient from 'socket.io-client';
 
 // import { MainStore } from '../../store/MainStore';
 import { isElectron } from '../../utils/isElectron';
@@ -13,6 +14,7 @@ import UserList from '../UserList';
 import Cookies from 'js-cookie';
 import { getCurrentUser } from 'action/userAction';
 import { UserStore } from 'store/UserStore';
+import { API_URL } from 'utils/constant';
 
 function Home(): JSX.Element {
   const { dispatch } = React.useContext(UserStore);
@@ -23,7 +25,18 @@ function Home(): JSX.Element {
   }, []);
 
   useEffect(() => {
+    const token: string = Cookies.get('token') || '';
     getCurrentUser(dispatch, Cookies.get('token') as string);
+    const socket = socketIOClient(API_URL);
+    socket.on('connect', () => {
+      socket.emit('join', token);
+      socket.on('messages', function(data: any) {
+        console.log(data);
+      });
+      socket.on('emergency', function(data: any) {
+        alert(JSON.stringify(data));
+      });
+    });
   }, []);
 
   return (

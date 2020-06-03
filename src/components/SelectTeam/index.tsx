@@ -32,7 +32,7 @@ export default function SelectTeam() {
   useEffect(() => {
     async function getDatas() {
       const res = await fetch(
-        `${BASE_URL}/mickey/visits/${id}/${selectedWeekFirstDay}`,
+        `${BASE_URL}/visits/${id}/${selectedWeekFirstDay}`,
         {
           headers: {
             'content-type': 'application/json',
