@@ -13,6 +13,7 @@ import moment from 'moment';
 
 const MyCalendar = () => {
   const [visits, setVisits] = useState([]);
+  const [emergencies, setEmergencies] = useState([]);
   const { state, dispatch } = useContext(MainStore);
   const calendarRef = React.useRef<any>(null);
 
@@ -36,8 +37,8 @@ const MyCalendar = () => {
   }, []);
 
   useEffect(() => {
-    if (state?.visits?.length) {
-      const vi = state.visits.map((v: Visit) => ({
+    if (state?.visits?.visits?.length) {
+      const vi = state.visits?.visits.map((v: Visit) => ({
         calendarId: '1',
         title: v?.hotel?.name,
         category: 'time',
@@ -48,9 +49,21 @@ const MyCalendar = () => {
       }));
       setVisits(vi);
     }
+    if (state?.visits?.emergencies?.length) {
+      const em = state.visits?.emergencies;
+      setEmergencies(em);
+    } else {
+      setEmergencies([]);
+    }
   }, [state?.visits, state.teamId]);
   return (
     <div className="calendar">
+      <div>liste des urgences : </div>
+      <ul>
+        {emergencies.map((e: any, i) => (
+          <li key={i}>{e.hotel.name}</li>
+        ))}
+      </ul>
       <div>
         <Button htmlType="button" onClick={() => handleClickButton('prev')}>
           <Icon type="left" />
