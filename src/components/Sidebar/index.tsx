@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
-import { Avatar } from 'antd';
+import { Avatar, Card } from 'antd';
 
 import { UserStore } from 'store/UserStore';
 import SelectTeam from 'components/SelectTeam';
 
 import './sidebar.scss';
+import useEmergency from 'hooks/useEmergency';
 
 function Sidebar(): JSX.Element {
   const {
     userState: { currentUser }
   } = useContext(UserStore);
+  const [emergencies] = useEmergency();
+
   return (
     <div className="sidebar">
       <div className="sidebar-logo">
@@ -29,6 +32,13 @@ function Sidebar(): JSX.Element {
           {currentUser?.name} {currentUser?.lastname}
         </p>
         <SelectTeam />
+        <div style={{ marginTop: '16px' }}>
+          {emergencies.map((e: any, i: number) => (
+            <Card key={i} title={'Urgence'} style={{ marginTop: '8px' }}>
+              {e?.hotel?.name} - {e?.hotel?.address}
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
