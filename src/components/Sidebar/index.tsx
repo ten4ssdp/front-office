@@ -32,13 +32,19 @@ function Sidebar(): JSX.Element {
           {currentUser?.name} {currentUser?.lastname}
         </p>
         <SelectTeam />
-        <div style={{ marginTop: '16px' }}>
-          {emergencies.map((e: any, i: number) => (
-            <Card key={i} title={'Urgence'} style={{ marginTop: '8px' }}>
-              {e?.hotel?.name} - {e?.hotel?.address}
-            </Card>
-          ))}
-        </div>
+        {emergencies.length > 0 && (
+          <div style={{ marginTop: '16px' }}>
+            {emergencies.map((e: any, i: number) => {
+              return (
+                e?.hotel && (
+                  <Card key={i} title={'Urgence'} style={{ marginTop: '8px' }}>
+                    {e?.hotel?.name} - {e?.hotel?.address}
+                  </Card>
+                )
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

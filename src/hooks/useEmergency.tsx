@@ -24,7 +24,6 @@ export default (
     });
   }, []);
   useEffect(() => {
-    console.log(notifications);
     if (notifications !== null && state?.teamId === notifications?.teamId) {
       new Notification('Nouvelle urgence', {
         body: notifications?.hotel?.name
