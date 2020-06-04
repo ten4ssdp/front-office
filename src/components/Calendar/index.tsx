@@ -10,11 +10,9 @@ import { Button, Icon } from 'antd';
 import { Visit } from 'interface/hotel';
 import { setWeekFirstDay } from 'action/mainAction';
 import moment from 'moment';
-import useEmergency from 'hooks/useEmergency';
 
 const MyCalendar = () => {
   const [visits, setVisits] = useState([]);
-  const [emergencies] = useEmergency();
   const { state, dispatch } = useContext(MainStore);
   const calendarRef = React.useRef<any>(null);
 

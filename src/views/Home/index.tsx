@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
-import socketIOClient from 'socket.io-client';
 
 // import { MainStore } from '../../store/MainStore';
 import { isElectron } from '../../utils/isElectron';
@@ -14,8 +13,6 @@ import UserList from '../UserList';
 import Cookies from 'js-cookie';
 import { getCurrentUser } from 'action/userAction';
 import { UserStore } from 'store/UserStore';
-import { API_URL } from 'utils/constant';
-import { addEmergency } from 'action/mainAction';
 
 function Home(): JSX.Element {
   const { dispatch } = React.useContext(UserStore);
