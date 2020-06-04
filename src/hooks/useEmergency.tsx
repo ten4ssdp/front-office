@@ -3,11 +3,13 @@ import { MainStore } from 'store/MainStore';
 import Cookies from 'js-cookie';
 import { API_URL } from 'utils/constant';
 import socketIOClient from 'socket.io-client';
-import { Visit } from 'interface/hotel';
 import { addEmergency } from 'action/mainAction';
 
-export default () => {
+export default (
+  defaultEmergencies: Array<any> = []
+): [Array<any>, React.Dispatch<any>] => {
   const [notifications, setNotification] = useState<any>([]);
+  const [emergencies, setEmergencies] = useState(defaultEmergencies);
   const { state, dispatch } = useContext(MainStore);
 
   useEffect(() => {
@@ -26,9 +28,17 @@ export default () => {
       new Notification('Nouvelle urgence', {
         body: notifications?.hotel?.name
       });
-      notifications !== null && addEmergency(dispatch, notifications);
     }
+    if (notifications !== null) addEmergency(dispatch, notifications);
   }, [notifications]);
+  useEffect(() => {
+    if (state?.visits?.emergencies?.length) {
+      const em = state.visits?.emergencies;
+      setEmergencies(em);
+    } else {
+      setEmergencies([]);
+    }
+  }, [state.visits]);
 
-  return [notifications];
+  return [emergencies, setEmergencies];
 };

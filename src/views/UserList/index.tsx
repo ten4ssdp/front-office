@@ -55,15 +55,17 @@ function UserList(): JSX.Element {
   const { datas, isloading }: any = useFetch(`${BASE_URL}/user`);
 
   useEffect(() => {
-    const arr = datas?.map((d: any) => ({
-      key: d?.id,
-      lastname: d?.lastname,
-      firstname: d?.name,
-      area: d?.sector?.name,
-      role: d?.role?.name,
-      dispatch
-    }));
-    setUsers(arr);
+    if (datas.length > 0) {
+      const arr = datas?.map((d: any) => ({
+        key: d?.id,
+        lastname: d?.lastname,
+        firstname: d?.name,
+        area: d?.sector?.name,
+        role: d?.role?.name,
+        dispatch
+      }));
+      setUsers(arr);
+    }
   }, [isloading]);
 
   useEffect(() => {

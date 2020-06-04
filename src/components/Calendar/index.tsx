@@ -14,8 +14,7 @@ import useEmergency from 'hooks/useEmergency';
 
 const MyCalendar = () => {
   const [visits, setVisits] = useState([]);
-  const [emergencies, setEmergencies] = useState([]);
-  const [notifications] = useEmergency();
+  const [emergencies] = useEmergency();
   const { state, dispatch } = useContext(MainStore);
   const calendarRef = React.useRef<any>(null);
 
@@ -51,21 +50,9 @@ const MyCalendar = () => {
       }));
       setVisits(vi);
     }
-    if (state?.visits?.emergencies?.length) {
-      const em = state.visits?.emergencies;
-      setEmergencies(em);
-    } else {
-      setEmergencies([]);
-    }
   }, [state?.visits, state.teamId]);
   return (
     <div className="calendar">
-      <div>liste des urgences : </div>
-      <ul>
-        {emergencies.map((e: any, i) => (
-          <li key={i}>{e.hotel.name}</li>
-        ))}
-      </ul>
       <div>
         <Button htmlType="button" onClick={() => handleClickButton('prev')}>
           <Icon type="left" />
