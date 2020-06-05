@@ -9,6 +9,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: install npm module
         run: npm install
+      - name: disable CI
+        run: export CI=false
       - name: build app
         run: npm run build
       - name: build image
