@@ -8,9 +8,7 @@ RUN npm install
 
 COPY . .
 
-ENV CI false
-
-RUN npm run build
+RUN CI=false npm run build
 
 FROM nginx
 
