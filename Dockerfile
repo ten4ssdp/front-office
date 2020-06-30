@@ -1,5 +1,7 @@
 FROM node:12.16.3 as app
 
+ARG API_URL
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -8,7 +10,7 @@ RUN npm install
 
 COPY . .
 
-RUN CI=false npm run build
+RUN REACT_APP_API_URL=${API_URL} npm run build 
 
 FROM nginx
 
