@@ -14,6 +14,8 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 And here are some credentials to connect to the front office :  
 
 - username: eric.salarie-1@ssdp.net
+- or username: jeannette.salarie-28@ssdp.net
+- or username: ramdane.salarie-42@ssdp.net
 - password: 1234
 
 ### Technologies
