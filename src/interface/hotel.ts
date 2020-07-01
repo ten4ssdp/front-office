@@ -45,6 +45,7 @@ export interface Visit {
   id: string;
   rate: number;
   status: number;
+  isUrgent: boolean;
   createdAt: string;
   updatedAt: string;
   teamId: string | number;
