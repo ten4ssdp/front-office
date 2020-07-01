@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Calendar from '@toast-ui/react-calendar';
 import 'tui-calendar/dist/tui-calendar.css';
 import 'tui-date-picker/dist/tui-date-picker.css';
@@ -6,10 +6,12 @@ import 'tui-time-picker/dist/tui-time-picker.css';
 import 'tui-calendar/dist/tui-calendar.css';
 import './calendar.scss';
 import { MainStore } from 'store/MainStore';
-import { Button, Icon } from 'antd';
+import { Button, Icon, message } from 'antd';
 import { Visit } from 'interface/hotel';
 import { setWeekFirstDay } from 'action/mainAction';
 import moment from 'moment';
+import ModalContainer from 'components/Modal';
+import crud from 'utils/crud';
 
 const MyCalendar = () => {
   const [visits, setVisits] = useState([]);
@@ -26,6 +28,16 @@ const MyCalendar = () => {
     setWeekFirstDay(dispatch, weekFirstDay);
   };
 
+  const launchMickey = useCallback(async () => {
+    const status = await crud.handlePost(
+      `mickey/${state.selectedWeekFirstDay}`,
+      {}
+    );
+    if (status === 200) {
+      message.success('Le planning a bien été (re)généré');
+    }
+  }, [state.selectedWeekFirstDay]);
+
   useEffect(() => {
     const calendarInstance = calendarRef && calendarRef?.current?.getInstance();
     const weekFirstDay = moment(calendarInstance?.getDateRangeStart().toDate())
@@ -37,27 +49,49 @@ const MyCalendar = () => {
 
   useEffect(() => {
     if (state?.visits?.visits?.length) {
-      const vi = state.visits?.visits.map((v: Visit) => ({
-        calendarId: '1',
-        title: v?.hotel?.name,
-        category: 'time',
-        start: v?.start,
-        end: v?.end,
-        location: `${v?.hotel?.address} ${v?.hotel?.zipCode} ${v?.hotel?.city}`,
-        isReadOnly: true
-      }));
+      const vi = state.visits?.visits.map((v: Visit) => {
+        let calendarId;
+        switch (v?.status) {
+          case 0:
+            calendarId = 1;
+            break;
+          case -1:
+            calendarId = -1;
+            break;
+          default:
+            calendarId = 1;
+        }
+        return {
+          calendarId,
+          title: v?.hotel?.name,
+          category: 'time',
+          start: v?.start,
+          end: v?.end,
+          location: `${v?.hotel?.address} ${v?.hotel?.zipCode} ${v?.hotel?.city}`,
+          isReadOnly: true
+        };
+      });
       setVisits(vi);
     }
   }, [state?.visits, state.teamId]);
   return (
     <div className="calendar">
-      <div>
-        <Button htmlType="button" onClick={() => handleClickButton('prev')}>
-          <Icon type="left" />
+      <div className="controls-header">
+        <div>
+          <Button htmlType="button" onClick={() => handleClickButton('prev')}>
+            <Icon type="left" />
+          </Button>
+          <Button htmlType="button" onClick={() => handleClickButton('next')}>
+            <Icon type="right" />
+          </Button>
+        </div>
+        <Button htmlType="button" onDoubleClick={launchMickey}>
+          <Icon type="interaction" />
+          Double cliquer pour lancer mickey
         </Button>
-        <Button htmlType="button" onClick={() => handleClickButton('next')}>
-          <Icon type="right" />
-        </Button>
+        <ModalContainer title="Signaler une absence">
+          <div>lol</div>
+        </ModalContainer>
       </div>
       <Calendar
         ref={calendarRef}
@@ -79,6 +113,12 @@ const MyCalendar = () => {
           ]
         }}
         calendars={[
+          {
+            id: '-1',
+            name: 'Annulé',
+            bgColor: '#e2e2e2',
+            borderColor: '#e2e2e2'
+          },
           {
             id: '0',
             name: 'Urgence',
