@@ -89,9 +89,6 @@ const MyCalendar = () => {
           <Icon type="interaction" />
           Double cliquer pour lancer mickey
         </Button>
-        <ModalContainer title="Signaler une absence">
-          <div>lol</div>
-        </ModalContainer>
       </div>
       <Calendar
         ref={calendarRef}
