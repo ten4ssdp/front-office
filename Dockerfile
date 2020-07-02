@@ -10,9 +10,11 @@ RUN npm install
 
 COPY . .
 
-RUN REACT_APP_API_URL=${API_URL} npm run build 
+RUN npm run build 
 
 FROM nginx
+
+EXPOSE 80
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
 
@@ -21,6 +23,11 @@ COPY ./conf /etc/nginx/conf.d
 WORKDIR /usr/share/nginx/html
 
 COPY  --from=app /app/build  .
+COPY ./conf/env.sh .
+COPY ./conf/.env .
 
-EXPOSE 80
+RUN chmod +x env.sh
+
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+
 
