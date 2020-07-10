@@ -10,7 +10,7 @@ This projet is a planning maker app make with React and TypeScript boostraped by
 
 ### Production
 
-[Here is the production link](http://15.188.3.249/)  
+[Here is the production link](http://production-app-elb-1614856992.eu-west-2.elb.amazonaws.com/)  
 And here are some credentials to connect to the front office :  
 
 - username: eric.salarie-1@ssdp.net
